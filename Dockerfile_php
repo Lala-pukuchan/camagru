@@ -1,0 +1,19 @@
+# Use the official PHP image with FPM
+FROM php:fpm
+
+# Set working directory
+WORKDIR /code
+
+# Install additional dependencies
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd
+
+# Copy your PHP scripts to the container
+COPY ./code /code
+
+# Set appropriate permissions for the web server to read the PHP files
+RUN chmod -R 755 /code
