@@ -5,6 +5,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Nunito", sans-serif;
+    font-size: 14px;
 }
 
 body {
@@ -385,12 +386,11 @@ body {
     position: relative;
     z-index: 1;
 
-    height: 620px;
+    height: 800px;
     flex-basis: 450px;
 }
 
 .slide-content {
-    margin: 100px 0 0 150px;
     position: relative;
 }
 
@@ -527,6 +527,111 @@ body {
     font-weight: 600;
 }
 
+/*Profile page*/
+.profile-header {
+    margin-top: 30px;
+}
+
+.profile-container {
+    max-width: 95.5rem;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.profile-btn {
+    display: inline-block;
+    font: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    cursor: pointer;
+}
+
+.profile-btn:focus {
+    outline: 0.5rem auto #4d90fe;
+}
+
+.profile {
+    padding: 5rem 0;
+}
+
+.profile:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.profile-image {
+    float:left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+.profile-image img {
+    border-radius: 50%;
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.profile-user-settings,
+.profile-stats,
+.profile-bio {
+    float: left;
+    width: calc(66.666% - 2rem);
+}
+
+.profile-user-settings {
+    margin: 1.1rem;
+}
+
+.profile-user-name {
+    display: inline-block;
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.profile-edit-btn {
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    border: 0.1rem solid #dbdbdb;
+    border-radius: 0.3rem;
+    padding: 0rem 2.4rem;
+    margin-left: 2rem;
+}
+
+.profile-setting-btn {
+    font-size: 2rem;
+    margin-left: 1rem;
+}
+
+.profile-stats {
+    margin-top: 2.3rem;
+}
+
+.profile-stats li {
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-right: 4rem;
+    cursor: pointer;
+}
+
+.profile-bio {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 2.3rem;
+}
+
+.profile-real-name,
+.profile-stat-count,
+.profile-edit-btn {
+    font-weight: 600;
+}
 
 /* footer */
 .footer {
