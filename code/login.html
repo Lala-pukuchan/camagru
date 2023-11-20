@@ -1,83 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camagru | Login</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
     <div class="container">
-        <div class="main-container">
-            <div class="main-content">
-                <div class="slide-container" style="background-image: url('assets/images/mobile-frame.png');">
-                    <div class="slide-content" id="slide-content">
-                        <img src="assets/images/screen1.png" class="active" alt="screen1">
-                        <img src="assets/images/screen2.png" alt="screen2">
-                        <img src="assets/images/screen3.png" alt="screen3">
-                        <img src="assets/images/screen4.png" alt="screen4">
-                        <img src="assets/images/screen5.png" alt="screen5">
-                    </div>
-                </div>
-                <div class="form-container">
-                    <div class="form-content box">
-                        <div class="logo">
-                            <img src="assets/images/logo.png" alt="" class="logo-img">
-                        </div>
-                        <form action="" class="loging-form" id="loging-form">
-                            <div class="form-group">
-                                <div class="login-input">
-                                    <input type="text" name="email" placeholder="Type your email...">
-                                </div>
-                                <div class="login-input">
-                                    <input type="text" name="password" placeholder="Type your password...">
-                                </div>
-                                <div class="btn-group">
-                                    <button class="login-btn" id="login-btn" type="submit">
-                                        Log In
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="or">
-                            <hr>
-                                <span>OR</span>
-                            <hr>
-                        </div>
-                        <div class="goto">
-                            <p>Don't have an account? <a href="#">Sign Up</a></p>
-                            <p>Just see the public photos? <a href="#">Public Photos</a></p>
-                        </div>
-                    </div>
-                </div>
+      <div class="main-container">
+        <div class="main-content">
+          <div
+            class="slide-container"
+            style="background-image: url('assets/images/mobile-frame.png')"
+          >
+            <div class="slide-content" id="slide-content">
+              <img
+                src="assets/images/screen1.png"
+                class="active"
+                alt="screen1"
+              />
+              <img src="assets/images/screen2.png" alt="screen2" />
+              <img src="assets/images/screen3.png" alt="screen3" />
+              <img src="assets/images/screen4.png" alt="screen4" />
+              <img src="assets/images/screen5.png" alt="screen5" />
             </div>
+          </div>
+          <div class="form-container">
+            <div class="form-content box">
+              <div class="logo">
+                <img src="assets/images/logo.png" alt="" class="logo-img" />
+              </div>
+              <form action="" class="loging-form" id="loging-form">
+                <div class="form-group">
+                  <div class="login-input">
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder="Type your email..."
+                    />
+                  </div>
+                  <div class="login-input">
+                    <input
+                      type="text"
+                      name="password"
+                      placeholder="Type your password..."
+                    />
+                  </div>
+                  <div class="btn-group">
+                    <button class="login-btn" id="login-btn" type="submit">
+                      Log In
+                    </button>
+                  </div>
+                </div>
+              </form>
+              <div class="or">
+                <hr />
+                <span>OR</span>
+                <hr />
+              </div>
+              <div class="goto">
+                <p>Don't have an account? <a href="#">Sign Up</a></p>
+                <p>Just see the public photos? <a href="#">Public Photos</a></p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <!--script-->
     <script>
-        setInterval(()=>{changeImg()}, 2000);
-        function changeImg() {
-            var images = document.getElementById('slide-content').getElementsByTagName('img');
-            var i = 0;
-            for (i=0; i < images.length; i++) {
-                var image = images[i];
-                if (image.classList.contains('active')) {
-                    image.classList.remove('active');
+      setInterval(() => {
+        changeImg();
+      }, 2000);
+      function changeImg() {
+        var images = document
+          .getElementById("slide-content")
+          .getElementsByTagName("img");
+        var i = 0;
+        for (i = 0; i < images.length; i++) {
+          var image = images[i];
+          if (image.classList.contains("active")) {
+            image.classList.remove("active");
 
-                    if (i == images.length - 1) {
-                        var nextImage = images[0];
-                        nextImage.classList.add('active');
-                        break;
-                    }
-
-                    var nextImage = images[i + 1];
-                    nextImage.classList.add('active');
-                    break;
-                }
+            if (i == images.length - 1) {
+              var nextImage = images[0];
+              nextImage.classList.add("active");
+              break;
             }
+
+            var nextImage = images[i + 1];
+            nextImage.classList.add("active");
+            break;
+          }
         }
+      }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-</body>
+  </body>
 </html>
