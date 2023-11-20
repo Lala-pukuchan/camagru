@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile_nginx
     ports:
       - "1080:80"
-    volumes:
-      - ./code:/code # will be delted later
+    #volumes:
+     # - ./code:/code # will be delted later
     depends_on:
       - php
       - db
@@ -16,8 +16,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_php
-    volumes:
-      - ./code:/code # will be delted later
+    # volumes:
+      # - ./code:/code # will be delted later
   db:
     image: mysql
     environment:
