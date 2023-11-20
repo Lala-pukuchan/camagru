@@ -761,6 +761,10 @@ body {
     width: 100%;
 }
 
+.single-post-container {
+    margin-top: 5px;
+}
+
 /* footer */
 .footer {
   padding-bottom: 52px;
