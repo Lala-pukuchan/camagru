@@ -35,7 +35,7 @@
               <div class="logo">
                 <img src="assets/images/logo.png" alt="" class="logo-img" />
               </div>
-              <form action="" class="login-form" id="loging-form">
+              <form action="" class="login-form" id="signup-form">
                 <p class="text-center alert-danger" id="error_message" style="color:red"></p>
                 <div class="form-group">
                   <div class="login-input">
@@ -43,6 +43,7 @@
                       type="text"
                       name="email"
                       placeholder="Type your email..."
+                      required
                     />
                   </div>
                 </div>
@@ -52,6 +53,7 @@
                         type="text"
                         name="username"
                         placeholder="Type your username..."
+                        required
                       />
                     </div>
                   </div>
@@ -62,6 +64,7 @@
                       name="password"
                       id="password"
                       placeholder="Type your password..."
+                      required
                     />
                   </div>
                 </div>
@@ -72,7 +75,8 @@
                         name="password_confirm"
                         id="password_confirm"
                         placeholder="Type your password again..."
-                      />
+                        required
+                        />
                     </div>
                   </div>
                 <div class="btn-group">
@@ -141,7 +145,7 @@
         return true;
       }
 
-      document.getElementById("signup_btn").addEventListener("click", (e)=> {
+      document.getElementById("signup-form").addEventListener("submit", (e)=> {
         e.preventDefault();
 
         verifyForm();

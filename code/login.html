@@ -35,7 +35,7 @@
               <div class="logo">
                 <img src="assets/images/logo.png" alt="" class="logo-img" />
               </div>
-              <form action="" class="loging-form" id="loging-form">
+              <form action="" class="login-form" id="login-form">
                 <p class="text-center alert-danger" id="error_message" style="color:red"></p>
                 <div class="form-group">
                   <div class="login-input">
@@ -43,6 +43,7 @@
                       type="text"
                       name="email"
                       placeholder="Type your email..."
+                      required
                     />
                   </div>
                 </div>
@@ -53,6 +54,7 @@
                       name="password"
                       id="password"
                       placeholder="Type your password..."
+                      required
                     />
                   </div>
                 </div>
@@ -117,7 +119,7 @@
         return true;
       }
 
-      document.getElementById("login_btn").addEventListener("click", (e)=> {
+      document.getElementById("login-form").addEventListener("submit", (e)=> {
         e.preventDefault();
 
         verifyForm();
