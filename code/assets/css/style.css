@@ -678,12 +678,6 @@ body {
   object-fit: cover;
 }
 
-/* footer */
-.footer {
-  padding-bottom: 52px;
-  padding-top: 25px;
-}
-
 .follow-btn {
   display: inline-block;
   background: rgb(0, 162, 255);
@@ -694,8 +688,50 @@ body {
   width: 450px;
 }
 
-#hello {
-  color: red !important;
+/* footer */
+.footer {
+  padding-bottom: 52px;
+  padding-top: 25px;
+}
+
+/* Camera */
+.camera-container {
+  max-width: 93.5rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.camera {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 3rem;
+}
+
+.camera-image {
+  position: relative;
+  flex: 1 0 22rem;
+  margin: 1rem;
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.camera-form {
+  width: 50%;
+  margin: 5px auto;
+}
+
+.upload-btn {
+  display: block;
+  background: rgb(0, 162, 255);
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  height: 100%;
+  width: 70px;
+  outline: none;
+  margin: 0 auto;
+  border-radius: 3px;
 }
 
 /* Responsive */
