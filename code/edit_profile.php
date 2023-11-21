@@ -31,8 +31,8 @@
         </div>
         <div class="mb-3">
           <label for="bio" class="form-label">Bio</label>
-          <textarea name="bio" id="bio" class="form-control" cols="30" rows="3"><?php echo $_SESSION['bio'] ?>
-          </textarea>
+          <textarea name="bio" id="bio" class="form-control" cols="30" rows="3"><?php echo $_SESSION['bio']; ?></textarea>
+
         </div>
         <div class="mb-3">
           <input name="update_profile_btn" id="update_profile_btn" name="update_profile_btn" class="update-profile-btn"

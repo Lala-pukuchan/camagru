@@ -95,8 +95,7 @@
           <li class="page-item <?php if ($page_no >= $total_no_of_pages) {
             echo 'disabled';
           } ?>">
-            <a class="page-link" 
-              href="<?php if ($page_no >= $total_no_of_pages) {
+            <a class="page-link" href="<?php if ($page_no >= $total_no_of_pages) {
               echo "#";
             } else {
               echo "?page_no=" . ($page_no + 1);
@@ -107,35 +106,13 @@
 
     </div>
     <div class="right-col">
+
       <!--profile-->
-      <div class="profile-card">
-        <div class="profile-pic">
-          <img src="assets/images/profile.png" alt="" />
-        </div>
-        <div>
-          <p class="username">username</p>
-          <p class="sub-text">sub-text</p>
-        </div>
+      <?php include("profile_card.php"); ?>
 
-        <!--logout-->
-        <form action="logout.php" method="get">
-          <button class="logout-btn">logout</button>
-        </form>
-
-      </div>
       <!--suggestions-->
-      <p class="suggestion-text">Suggestions for you</p>
+      <?php include("suggestion_side_area.php"); ?>
 
-      <div class="suggestion-card">
-        <div class="suggestion-pic">
-          <img src="assets/images/profile.png" alt="" />
-        </div>
-        <div>
-          <p class="username">username</p>
-          <p class="sub-text">sub-text</p>
-        </div>
-        <button class="follow-btn">follow</button>
-      </div>
     </div>
   </div>
 </section>
