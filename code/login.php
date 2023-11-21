@@ -1,3 +1,15 @@
+<?php
+
+session_start();
+
+// check if user is already logged in
+if (isset($_SESSION['id'])) {
+  header('location: index.php');
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
