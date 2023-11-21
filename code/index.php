@@ -25,35 +25,86 @@
           <p class="username">username</p>
         </div>
       </div>
+
+      <?php include("get_latest_posts.php"); ?>
+
       <!--posts-->
-      <div class="post">
-        <div class="info">
-          <div class="user">
-            <div class="profile-pic">
-              <img src="assets/images/profile.png" />
+      <?php foreach ($posts as $post) { ?>
+
+        <div class="post">
+          <div class="info">
+            <div class="user">
+              <div class="profile-pic">
+                <img src="<?php echo "assets/images/" . $post['profile_image']; ?>" alt="" />
+              </div>
+              <p class="username">
+                <?php echo $post["username"]; ?>
+              </p>
             </div>
-            <p class="username">username</p>
+            <i class="fas fa-ellipsis-h options"></i>
           </div>
-          <i class="fas fa-ellipsis-h options"></i>
-        </div>
-        <img class="post-image" src="assets/images/1.jpg" alt="" />
-        <div class="post-content">
-          <div class="reaction-wrapper">
-            <i class="icon fas fa-heart"></i>
-            <i class="icon fas fa-comment"></i>
+          <img class="post-image" src="<?php echo "assets/images/" . $post['image']; ?>" alt="" />
+          <div class="post-content">
+            <div class="reaction-wrapper">
+              <i class="icon fas fa-heart"></i>
+              <i class="icon fas fa-comment"></i>
+            </div>
+            <p class="likes">
+              <?php echo $post['likes']; ?>
+            </p>
+            <p class="description">
+              <span>
+                <?php echo $post['caption']; ?>
+              </span>
+              <?php echo $post['hashtags']; ?>
+            </p>
+            <p class="post-time">
+              <?php echo date("M, Y,", strtotime($post['date'])); ?>
+            </p>
           </div>
-          <p class="likes">2,154 Likes</p>
-          <p class="description">
-            <span>username</span>this is a post by username
-          </p>
-          <p class="post-time">2021/12/08</p>
+          <div class="comment-wrapper">
+            <img class="icon" src="assets/images/profile.png" alt="" />
+            <input type="text" class="comment-box" placeholder="Add a comment" />
+            <button class="comment-btn">Post</button>
+          </div>
         </div>
-        <div class="comment-wrapper">
-          <img class="icon" src="assets/images/profile.png" alt="" />
-          <input type="text" class="comment-box" placeholder="Add a comment" />
-          <button class="comment-btn">Post</button>
-        </div>
-      </div>
+
+      <?php } ?>
+
+      <!--pagenation-->
+      <nav aria-label="Page navigation example" class="mt-3">
+        <ul class="pagination justify-content-center">
+          <li class="page-item 
+            <?php if ($page_no <= 1) {
+              echo 'disabled';
+            } ?>">
+            <a class="page-link <?php if ($page_no <= 1) {
+              echo "#";
+            } else {
+              echo '?page_no=' . ($page_no - 1);
+            } ?>" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="?page_no=1">1</a></li>
+          <li class="page-item"><a class="page-link" href="?page_no=2">2</a></li>
+          <li class="page-item"><a class="page-link" href="?page_no=3">3</a></li>
+
+          <?php if ($page_no >= 3) { ?>
+            <li class="page-item"><a class="page-link" href="#">...</a></li>
+            <li class="page-item"><a class="page-link" href="<?php echo "?page_no=" . $page_no; ?>"></a></li>
+          <?php } ?>
+          <li class="page-item <?php if ($page_no >= $total_no_of_pages) {
+            echo 'disabled';
+          } ?>">
+            <a class="page-link" 
+              href="<?php if ($page_no >= $total_no_of_pages) {
+              echo "#";
+            } else {
+              echo "?page_no=" . ($page_no + 1);
+            } ?>">Next</a>
+          </li>
+        </ul>
+      </nav>
+
     </div>
     <div class="right-col">
       <!--profile-->
