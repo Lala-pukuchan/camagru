@@ -77,51 +77,30 @@
 <main>
   <div class="profile-container">
     <div class="gallery">
-      <div class="gallery-item">
-        <img src="assets/images/1.jpg" class="gallery-image" alt="" />
-        <div class="gallery-item-info">
-          <ul>
-            <li class="gallery-item-likes">
-              <span class="hide-gallery-element">Likes:</span>
-              <i class="fas fa-heart"></i>
-            </li>
-            <li class="gallery-item-comments">
-              <span class="hide-gallery-element">Comments:</span>
-              <i class="fas fa-comment"></i>
-            </li>
-          </ul>
+
+      <?php include("get_user_post.php"); ?>
+
+      <?php foreach ($posts as $post) { ?>
+
+        <div class="gallery-item">
+          <img src="<?php echo "assets/images/" . $post['image']; ?>" class="gallery-image" alt="" />
+          <div class="gallery-item-info">
+            <ul>
+              <li class="gallery-item-likes">
+                <span class="hide-gallery-element">
+                  Likes:
+                  <?php echo $post['likes']; ?>
+                </span>
+                <i class="fas fa-heart"></i>
+              </li>
+              <li class="gallery-item-comments">
+                <span class="hide-gallery-element">Comments:</span>
+                <i class="fas fa-comment"></i>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="gallery-item">
-        <img src="assets/images/1.jpg" class="gallery-image" alt="" />
-        <div class="gallery-item-info">
-          <ul>
-            <li class="gallery-item-likes">
-              <span class="hide-gallery-element">Likes:</span>
-              <i class="fas fa-heart"></i>
-            </li>
-            <li class="gallery-item-comments">
-              <span class="hide-gallery-element">Comments:</span>
-              <i class="fas fa-comment"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="gallery-item">
-        <img src="assets/images/1.jpg" class="gallery-image" alt="" />
-        <div class="gallery-item-info">
-          <ul>
-            <li class="gallery-item-likes">
-              <span class="hide-gallery-element">Likes:</span>
-              <i class="fas fa-heart"></i>
-            </li>
-            <li class="gallery-item-comments">
-              <span class="hide-gallery-element">Comments:</span>
-              <i class="fas fa-comment"></i>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <?php } ?>
     </div>
   </div>
 </main>
