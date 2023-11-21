@@ -10,7 +10,7 @@ if (isset($_POST['login_btn'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post FROM users WHERE email = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post, bio FROM users WHERE email = ? AND password = ?");
 
     $stmt->bind_param("ss", $email, $password);
 
@@ -20,7 +20,7 @@ if (isset($_POST['login_btn'])) {
 
     // if user exists
     if ($stmt->num_rows() > 0) {
-        $stmt->bind_result($id, $username, $email, $image, $followers, $following, $post);
+        $stmt->bind_result($id, $username, $email, $image, $followers, $following, $post, $bio);
         $stmt->fetch();
 
         $_SESSION['id'] = $id;
@@ -30,6 +30,7 @@ if (isset($_POST['login_btn'])) {
         $_SESSION['followers'] = $followers;
         $_SESSION['following'] = $following;
         $_SESSION['post'] = $post;
+        $_SESSION['bio'] = $bio;
 
 
         header('location:../index.php');

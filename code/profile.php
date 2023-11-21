@@ -4,25 +4,41 @@
   <header class="profile-container">
     <div class="profile">
       <div class="profile-image">
-        <img src="assets/images/profile.png" alt="" />
+        <img src="<?php echo "assets/images/" . $_SESSION['image']; ?>" alt="" />
       </div>
       <div class="profile-user-setting">
-        <h1 class="profile-user-name">username</h1>
-        <button class="profile-btn profile-edit-btn">Edit Profile</button>
+        <h1 class="profile-user-name">
+          <?php echo $_SESSION['username']; ?>
+        </h1>
+
+        <!--edit profile-->
+        <form action="edit_profile.php" method="get" style="display: inline-block;">
+          <button class="profile-btn profile-edit-btn">Edit Profile</button>
+        </form>
+
         <button class="profile-btn profile-settings-btn" area-label="profile settings">
           <i class="fas fa-cog"></i>
         </button>
       </div>
       <div class="profile-stats">
         <ul>
-          <li><span class="profile-stat-count">164</span> posts</li>
-          <li><span class="profile-stat-count">188</span> followers</li>
-          <li><span class="profile-stat-count">206</span> following</li>
+          <li><span class="profile-stat-count">
+              <?php echo $_SESSION['post']; ?>
+            </span> posts</li>
+          <li><span class="profile-stat-count">
+              <?php echo $_SESSION['followers']; ?>
+            </span> followers</li>
+          <li><span class="profile-stat-count">
+              <?php echo $_SESSION['following']; ?>
+            </span> following</li>
         </ul>
       </div>
       <div class="profile-bio">
         <p>
-          <span class="profile-real-name">Name</span>This is a description
+          <span class="profile-real-name">
+            <?php echo $_SESSION['username']; ?>
+          </span>
+          <?php echo $_SESSION['bio']; ?>
         </p>
       </div>
     </div>
