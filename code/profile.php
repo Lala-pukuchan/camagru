@@ -2,6 +2,25 @@
 
 <header class="profile-header">
   <header class="profile-container">
+
+    <!--show success message-->
+    <?php if (isset($_GET['success_message'])) { ?>
+
+      <p class="text-center alert-success" id="success_message" style="color:green">
+        <?php echo $_GET['success_message']; ?>
+      </p>
+
+    <?php } ?>
+
+    <!--show error message-->
+    <?php if (isset($_GET['error_message'])) { ?>
+
+      <p class="text-center alert-danger" id="error_message" style="color:red">
+        <?php echo $_GET['error_message']; ?>
+      </p>
+
+    <?php } ?>
+
     <div class="profile">
       <div class="profile-image">
         <img src="<?php echo "assets/images/" . $_SESSION['image']; ?>" alt="" />
@@ -16,9 +35,19 @@
           <button class="profile-btn profile-edit-btn">Edit Profile</button>
         </form>
 
-        <button class="profile-btn profile-settings-btn" area-label="profile settings">
+        <button class="profile-btn profile-settings-btn" id="options_btn" area-label="profile settings">
           <i class="fas fa-cog"></i>
         </button>
+
+        <div class="popup" id="popup">
+          <div class="popup-window">
+            <span class="close-popup" id="close_popup">&times;</span>
+            <a href="edit_profile.php">Edit Profile</a>
+            <a href="camera.php">Create Post</a>
+            <a href="logout.php">Log out</a>
+          </div>
+        </div>
+
       </div>
       <div class="profile-stats">
         <ul>
@@ -98,7 +127,7 @@
 </main>
 
 <!--script-->
-<script>
+<!--<script>
   setInterval(() => {
     changeImg();
   }, 2000);
@@ -124,9 +153,35 @@
       }
     }
   }
-</script>
+</script>-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
+
+<script>
+
+  var popupWindow = document.getElementById("popup");
+  var optionsBtn = document.getElementById("options_btn");
+  var closeWindow = document.getElementById("close_popup");
+
+  optionsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    popupWindow.style.display = "block";
+  });
+
+  closeWindow.addEventListener("click", (e) => {
+    e.preventDefault();
+    popupWindow.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target == popupWindow) {
+      popupWindow.style.display = "none";
+    }
+  });
+
+
+</script>
+
 </body>
 
 </html>
