@@ -4,31 +4,13 @@
 <section class="main">
   <div class="wrapper">
     <div class="left-col">
-      <!--status-->
-      <div class="status-wrapper">
-        <div class="status-card">
-          <div class="profile-pic">
-            <img src="assets/images/profile.png" />
-          </div>
-          <p class="username">username</p>
-        </div>
-        <div class="status-card">
-          <div class="profile-pic">
-            <img src="assets/images/profile.png" />
-          </div>
-          <p class="username">username</p>
-        </div>
-        <div class="status-card">
-          <div class="profile-pic">
-            <img src="assets/images/profile.png" />
-          </div>
-          <p class="username">username</p>
-        </div>
-      </div>
 
-      <?php include("get_latest_posts.php"); ?>
+      <!--status-->
+      <?php include("get_status_wrapper.php"); ?>
 
       <!--posts-->
+      <?php include("get_latest_posts.php"); ?>
+      
       <?php foreach ($posts as $post) { ?>
 
         <div class="post">

@@ -23,7 +23,10 @@
                     <?php echo substr($suggestion['bio'], 0, 15); ?>
                 </p>
             </div>
-            <button class="follow-btn">follow</button>
+            <form action="follow_this_person.php" method="post">
+                <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">
+                <button class="follow-btn" type="submit" name="follow_btn">follow</button>
+            </form>
         </div>
 
     <?php } ?>
