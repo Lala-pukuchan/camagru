@@ -970,3 +970,13 @@ body {
   font-size: 10px;
   padding: 10px;
 }
+
+/* delete comment */
+.delete-comment-btn {
+  background:#fff;
+  color: rgb(0, 162, 255);
+  border: none;
+  outline: none;
+  font-size: 16px;
+  margin-left: 5px;
+}

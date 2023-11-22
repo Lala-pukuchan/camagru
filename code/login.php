@@ -72,7 +72,7 @@ if (isset($_SESSION['id'])) {
               <hr />
             </div>
             <div class="goto">
-              <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+              <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
               <p>Just see the public photos? <a href="#">Public Photos</a></p>
             </div>
           </div>

@@ -79,12 +79,18 @@ if (isset($_GET['post_id'])) {
             </div>
 
             <?php if ($post['user_id'] == $_SESSION['id']) { ?>
-
-              <button class="profile-btn profile-settings-btn" id="options-btn" aria-label="profile settings">
+              <button onclick="document.getElementById('popup-comment<?php echo $comment['id']; ?>').style.display = 'block';" class="profile-btn profile-settings-btn" id="options-btn" aria-label="profile settings">
                 <i class="fas fa-ellipsis-h options"></i>
               </button>
 
             <?php } ?>
+
+            <div class="popup" id="popup">
+              <div class="popup-window">
+                <span class="close-popup" id="close_popup">&times;</span>
+                <a href="edit_post.php?post_id=<?php echo $post['id']; ?>">Edit Post</a>
+              </div>
+            </div>
 
           </div>
           <img class="post-image" src="<?php echo "assets/images/" . $post['image']; ?>" alt="" />
@@ -116,9 +122,29 @@ if (isset($_GET['post_id'])) {
                     <?php echo date("M, Y,", strtotime($comment['date'])); ?>
                   </span>
                 </p>
+              
+                <!--manage comments-->
+                <?php if ($comments['user_id'] == $_SESSION['id']) { ?>
+                  <button onclick="" class="profile-btn profile-settings-btn" id="options_btn" aria-label="profile settings">
+                    <i class="fas fa-edit"></i>
+                  </button>
+
+                  <div class="popup" id="popup-comment<?php echo $comment['id']; ?>" >
+                    <div class="popup-window">
+                      <span onclick="document.getElementById('popup-comment<?php echo $comment['id']; ?>').style.display = 'none';" 
+                        class="close-popup" id="close_popup<?php echo $comment['id']; ?>"
+                        style="font-size: 30px;">&times;</span>
+                      <a href="edit_comment.php?commnet_id=<?php echo $comment['id']; ?>&post_id=<?php echo $post['id']; ?>">Edit Comment</a>
+                      <form action="delete_comment.php" method="post">
+                        <input type="hidden" name="comment_id" value="<?php echo $comment['id']; ?>">
+                        <input type="text" name="post_id" value="<?php echo $post['id']; ?>">
+                        <input class="delete-comment-btn" type="submit" name="delete_comment_btn" value="Delete Comment">
+                      </form>
+                    </div>
+                  </div>
+                <?php } ?>
               </div>
             <?php } ?>
-
 
             <!--pagenation-->
             <nav aria-label="Page navigation example" class="mt-3">
@@ -173,6 +199,33 @@ if (isset($_GET['post_id'])) {
 <!--script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
+<script>
+
+  var popupWindow = document.getElementById("popup");
+  var optionsBtn = document.getElementById("options_btn");
+  var closeWindow = document.getElementById("close_popup");
+
+  optionsBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    popupWindow.style.display = "block";
+  });
+
+  closeWindow.addEventListener("click", (e) => {
+    e.preventDefault();
+    popupWindow.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target == popupWindow) {
+      popupWindow.style.display = "none";
+    }
+  });
+
+
+
+
+</script>
+
 </body>
 
 </html>
