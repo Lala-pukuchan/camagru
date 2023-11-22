@@ -11,7 +11,7 @@ $stmt->execute();
 
 $stmt->store_result();
 
-if ($stmt->num_row() > 0) {
+if ($stmt->num_rows() > 0) {
     $user_like_this_post = true;
 } else {
     $user_like_this_post = false;
