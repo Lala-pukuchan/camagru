@@ -5,12 +5,30 @@
   <div class="wrapper">
     <div class="left-col">
 
+      <!--show success message-->
+      <?php if (isset($_GET['success_message'])) { ?>
+
+        <p class="text-center alert-success" id="success_message" style="color:green">
+          <?php echo $_GET['success_message']; ?>
+        </p>
+
+      <?php } ?>
+
+      <!--show error message-->
+      <?php if (isset($_GET['error_message'])) { ?>
+
+        <p class="text-center alert-danger" id="error_message" style="color:red">
+          <?php echo $_GET['error_message']; ?>
+        </p>
+
+      <?php } ?>
+
       <!--status-->
       <?php include("get_status_wrapper.php"); ?>
 
       <!--posts-->
       <?php include("get_latest_posts.php"); ?>
-      
+
       <?php foreach ($posts as $post) { ?>
 
         <div class="post">
@@ -23,7 +41,12 @@
                 <?php echo $post["username"]; ?>
               </p>
             </div>
-            <i class="fas fa-ellipsis-h options"></i>
+
+            <!--link to single post-->
+            <a href="single_post.php?post_id=<?php echo $post['id']; ?>" style="color:#000;">
+              <i class="fas fa-ellipsis-h options"></i>
+            </a>
+
           </div>
           <img class="post-image" src="<?php echo "assets/images/" . $post['image']; ?>" alt="" />
           <div class="post-content">

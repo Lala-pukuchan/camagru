@@ -31,7 +31,8 @@
         </div>
         <div class="mb-3">
           <label for="bio" class="form-label">Bio</label>
-          <textarea name="bio" id="bio" class="form-control" cols="30" rows="3"><?php echo $_SESSION['bio']; ?></textarea>
+          <textarea name="bio" id="bio" class="form-control" cols="30"
+            rows="3"><?php echo $_SESSION['bio']; ?></textarea>
 
         </div>
         <div class="mb-3">
@@ -41,30 +42,13 @@
       </form>
     </div>
     <div class="right-col">
-      <!--profile-->
-      <div class="profile-card">
-        <div class="profile-pic">
-          <img src="assets/images/profile.png" alt="" />
-        </div>
-        <div>
-          <p class="username">username</p>
-          <p class="sub-text">sub-text</p>
-        </div>
-        <button class="logout-btn">logout</button>
-      </div>
-      <!--suggestions-->
-      <p class="suggestion-text">Suggestions for you</p>
 
-      <div class="suggestion-card">
-        <div class="suggestion-pic">
-          <img src="assets/images/profile.png" alt="" />
-        </div>
-        <div>
-          <p class="username">username</p>
-          <p class="sub-text">sub-text</p>
-        </div>
-        <button class="follow-btn">follow</button>
-      </div>
+      <!--profile-->
+      <?php include("profile_card.php"); ?>
+
+      <!--suggestions-->
+      <?php include("suggestion_side_area.php"); ?>
+
     </div>
   </div>
 </section>
