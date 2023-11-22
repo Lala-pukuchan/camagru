@@ -67,11 +67,15 @@
               <?php echo date("M, Y,", strtotime($post['date'])); ?>
             </p>
           </div>
-          <div class="comment-wrapper">
+
+          <div>
+            <a href="single_post.php?post_id=<?php echo $post['id']; ?>" class="btn">comments</a>
+          </div>
+          <!--div class="comment-wrapper">
             <img class="icon" src="assets/images/profile.png" alt="" />
             <input type="text" class="comment-box" placeholder="Add a comment" />
             <button class="comment-btn">Post</button>
-          </div>
+          </div-->
         </div>
 
       <?php } ?>
