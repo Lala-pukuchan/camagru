@@ -8,7 +8,7 @@ include("db/connection.php");
 if (isset($_POST['other_user_id'])) {
 
     $other_user_id = $_POST['other_user_id'];
-    $stmt->prepare('SELECT * FROM users WHERE id = ?');
+    $stmt = $conn->prepare('SELECT * FROM users WHERE id = ?');
     $stmt->bind_param('i', $other_user_id);
 
     if ($stmt->execute()) {
@@ -32,7 +32,7 @@ if (isset($_POST['other_user_id'])) {
                 <div class="profile-image">
                     <img src="<?php echo "assets/images/" . $user['image']; ?>" alt="" />
                 </div>
-                <div class="profile-user-setting">
+                <div class="profile-user-setting" style="width: 35%; text-align: center">
                     <h1 class="profile-user-name">
                         <?php echo $user['username']; ?>
                     </h1>
@@ -49,9 +49,14 @@ if (isset($_POST['other_user_id'])) {
                                 <?php echo $user['following']; ?>
                             </span> following</li>
                     </ul>
+                    <form action="">
+                        <button type="submit" class="follow-btn-user-profile">
+                            Follow
+                        </button>
+                    </form>
                 </div>
-                <div class="profile-bio">
-                    <p>
+                <div class="profile-bio" style="text-align: center; width: 100%">
+                    <p style="text-align: center">
                         <span class="profile-real-name">
                             <?php echo $user['username']; ?>
                         </span>

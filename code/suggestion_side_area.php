@@ -2,13 +2,18 @@
 
 <?php include("get_suggestion.php"); ?>
 
+<!--showing others users except the current user-->
 <?php foreach ($suggestions as $suggestion) { ?>
 
     <?php if ($suggestion["id"] != $_SESSION["id"]) { ?>
 
         <div class="suggestion-card">
             <div class="suggestion-pic">
-                <img src="<?php echo "assets/images/" . $suggestion["image"]; ?>" alt="" />
+                <form action="other_user_profile.php" id="suggestion_form<?php echo $suggestion["id"]; ?>" method="post">
+                    <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">
+                    <img onclick="document.getElementById('suggestion_form' + <?php echo $suggestion['id']; ?>).submit();"
+                        src="<?php echo "assets/images/" . $suggestion["image"]; ?>" alt="" />
+                </form>
             </div>
             <div>
                 <p class="username">
