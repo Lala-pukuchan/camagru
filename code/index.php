@@ -51,7 +51,32 @@
           <img class="post-image" src="<?php echo "assets/images/" . $post['image']; ?>" alt="" />
           <div class="post-content">
             <div class="reaction-wrapper">
-              <i class="icon fas fa-heart"></i>
+
+
+              <!--check user like this photo-->
+              <?php include("check_if_user_like_this_post.php"); ?>
+              
+              <?php if ($user_like_this_post) { ?>
+
+                <form action="unlike_this_post.php" method="post">
+                  <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                  <button style="color: #fe4164;" class="heart" type="submit" name="heart_btn">
+                  <i class="icon fas fa-heart"></i>  
+                  </button>
+                </form>
+                
+
+              <?php } else { ?>
+
+                <form action="like_this_post.php" method="post">
+                  <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
+                  <button class="heart" type="submit" name="heart_btn">
+                  <i class="icon fas fa-heart"></i>  
+                  </button>
+                </form>
+
+              <?php }  ?>
+              
               <i class="icon fas fa-comment"></i>
             </div>
             <p class="likes">
