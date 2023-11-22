@@ -54,12 +54,12 @@
           <li><span class="profile-stat-count">
               <?php echo $_SESSION['post']; ?>
             </span> posts</li>
-          <li><span class="profile-stat-count">
-              <?php echo $_SESSION['followers']; ?>
+          <!--<li><span class="profile-stat-count">
+              <?php /*echo $_SESSION['followers'];*/ ?>
             </span> followers</li>
           <li><span class="profile-stat-count">
-              <?php echo $_SESSION['following']; ?>
-            </span> following</li>
+              <?php /*echo $_SESSION['following'];*/ ?>
+            </span> following</li>-->
         </ul>
       </div>
       <div class="profile-bio">
@@ -93,10 +93,10 @@
                 </span>
                 <i class="fas fa-heart"></i>
               </li>
-              <li class="gallery-item-comments">
+              <!--<li class="gallery-item-comments">
                 <span class="hide-gallery-element">Comments:</span>
                 <i class="fas fa-comment"></i>
-              </li>
+              </li>-->
             </ul>
           </div>
         </div>

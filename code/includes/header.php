@@ -28,13 +28,16 @@ if (!isset($_SESSION['id'])) {
     <nav class="navbar">
         <div class="nav-wrapper">
             <img class="brand-img" src="assets/images/logo.png" />
-            <form class="search-form" action="">
+            <!--<form class="search-form" action="">
                 <input type="text" class="search-box" placeholder="search..." />
-            </form>
+            </form>-->
             <div class="nav-items">
                 <a href="index.php" style="color: #000;"><i class="icon fas fa-home"></i></a>
-                <i class="icon fas fa-plus"></i>
-                <i class="icon fas fa-heart"></i>
+                <!--<i class="icon fas fa-plus"></i>-->
+                <!--<i class="icon fas fa-heart"></i>-->
+                <a href="logout.php" style="color: #000;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </a>
                 <div class="icon user-profile">
                     <a href="profile.php" style="color: #000;"><i class="icon fas fa-user"></i></a>
                 </div>

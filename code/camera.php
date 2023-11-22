@@ -49,6 +49,38 @@
   </div>
 </div>
 
+
+<main>
+  <div class="profile-container">
+    <div class="gallery">
+
+      <?php include("get_user_post.php"); ?>
+
+      <?php foreach ($posts as $post) { ?>
+
+        <div class="gallery-item" style="flex: 1 0 2rem; !important">
+          <img src="<?php echo "assets/images/" . $post['image']; ?>" class="gallery-image" alt="" />
+          <div class="gallery-item-info">
+            <ul>
+              <li class="gallery-item-likes">
+                <span class="hide-gallery-element">
+                  Likes:
+                  <?php echo $post['likes']; ?>
+                </span>
+                <i class="fas fa-heart"></i>
+              </li>
+              <!--<li class="gallery-item-comments">
+                <span class="hide-gallery-element">Comments:</span>
+                <i class="fas fa-comment"></i>
+              </li>-->
+            </ul>
+          </div>
+        </div>
+      <?php } ?>
+    </div>
+  </div>
+</main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
 </body>
