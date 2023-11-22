@@ -12,7 +12,7 @@ if (isset($_POST['heart_btn'])) {
     $stmt->bind_param("ii", $user_id, $post_id);
     
     $stmt1 = $conn->prepare("UPDATE posts SET likes=likes-1 WHERE id = ?");
-    $stmt->bind_param("i", $post_id);
+    $stmt1->bind_param("i", $post_id);
 
     $stmt->execute();
     $stmt1->execute();
