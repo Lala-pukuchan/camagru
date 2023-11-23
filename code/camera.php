@@ -20,30 +20,41 @@
 
 <div class="camera-container">
 
-  <!-- Webcam Feed -->
-  <video id="webcam" style="width: 500px; height: auto;" autoplay></video>
-  <button id="captureButton">Capture Image</button>
-
-  <!-- Image Preview (after capturing) -->
-  <canvas id="canvas" style="width: 500px; height: auto; display: none;"></canvas>
-
   <div class="camera">
     <div class="camera-image">
 
-      <!--display image-->
-      <img id="imagePreview" style="width: 500px;" src="assets/images/1.jpg" alt="" />
+      <!--select upload or webcam-->
+      <div class="selection-buttons">
+        <button type="button" id="useWebcamButton">Use Webcam</button>
+        <button type="button" id="uploadImageButton">Upload Image</button>
+      </div>
 
       <!--post-->
       <form action="create_post.php" method="post" enctype="multipart/form-data" class="camera-form">
 
+        <!-- Hidden Input for Status -->
+        <input type="hidden" name="selectedOption" id="selectedOption" value="">
+
+        <!-- Webcam Feed -->
+        <div id="webcamSection" style="display: none;">
+          <video id="webcam" style="width: 500px; height: auto;" autoplay></video>
+          <button id="captureButton">Capture Image</button>
+          <canvas id="canvas" style="width: 500px; height: auto; display: none;"></canvas>
+        </div>
+
+        <!-- Upload Image Section -->
+        <div id="uploadImageSection" style="display: none;">
+          <div class="camera">
+            <div class="camera-image">
+              <img id="imagePreview" style="width: 500px;" src="assets/images/1.jpg" alt="" />
+              <input type="file" name="image" id="imageInput" class="form-control" />
+            </div>
+          </div>
+        </div>
+
         <!-- Captured Image -->
         <div class="form-group">
           <input type="hidden" name="capturedImage" id="capturedImage">
-        </div>
-
-        <!-- Image Upload -->
-        <div class="form-group">
-          <input type="file" name="image" id="imageInput" class="form-control" required />
         </div>
 
         <!-- Stamp Gallery -->
@@ -102,31 +113,46 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
+
+<!--choose upload or webcam-->
+<script>
+  const useWebcamButton = document.getElementById('useWebcamButton');
+  const uploadImageButton = document.getElementById('uploadImageButton');
+  const webcamSection = document.getElementById('webcamSection');
+  const uploadImageSection = document.getElementById('uploadImageSection');
+  const selectedOptionInput = document.getElementById('selectedOption');
+
+  useWebcamButton.addEventListener('click', () => {
+    webcamSection.style.display = 'block';
+    uploadImageSection.style.display = 'none';
+    selectedOptionInput.value = 'webcam';
+  });
+
+  uploadImageButton.addEventListener('click', () => {
+    webcamSection.style.display = 'none';
+    uploadImageSection.style.display = 'block';
+    selectedOptionInput.value = 'upload';
+  });
+
+</script>
+
+<!--image preview-->
 <script>
   document.getElementById('imageInput').addEventListener('change', function (event) {
+
+    console.log(event.target.files[0]);
+
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
-
       reader.onload = function (e) {
         document.getElementById('imagePreview').src = e.target.result;
       };
-
       reader.readAsDataURL(event.target.files[0]);
     }
   });
 </script>
 
-<script>
-  document.getElementById('imageInput').addEventListener('change', function (event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        document.getElementById('imagePreview').src = e.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  });
-</script>
+<!--webcam-->
 <script>
   const webcamElement = document.getElementById('webcam');
   const canvasElement = document.getElementById('canvas');

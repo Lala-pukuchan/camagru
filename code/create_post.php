@@ -13,54 +13,50 @@ if (isset($_POST['upload_image-btn'])) {
     $hashtags = $_POST['hashtags'];
     $image = $_FILES['image']['tmp_name'];
     $stampFilename = $_POST['stamp'];
+    $stampPath = "assets/images/stamps/" . $stampFilename;
     $like = 0;
     $date = date("Y-m-d H:i:s");
+    $selectedOption = $_POST['selectedOption'];
 
+    // Determine if the image is uploaded or captured
+    if ($selectedOption == 'webcam') {
+        // Process captured webcam image
+        $imageDataUrl = $_POST['capturedImage'];
+        list(, $imageDataUrl) = explode(',', $imageDataUrl);
+        $imageData = base64_decode($imageDataUrl);
 
-    $imageDataUrl = $_POST['capturedImage'];
+        // Define the image name
+        $image_name = 'captured_image_' . time() . '.png';
 
-    // Convert data URL to image data
-    list($type, $imageDataUrl) = explode(';', $imageDataUrl);
-    list(, $imageDataUrl) = explode(',', $imageDataUrl);
-    $imageData = base64_decode($imageDataUrl);
+        // Save the image
+        file_put_contents('assets/images/save/' . $image_name, $imageData);
+    } elseif ($selectedOption == 'upload' && isset($_FILES['image'])) {
+        // Process uploaded image
+        $image = $_FILES['image']['tmp_name'];
+        $imageType = exif_imagetype($image);
 
-    // Determine the image type
-    $imageType = '';
-    if (stristr($type, 'png')) {
-        $imageType = 'png';
-    } else if (stristr($type, 'jpeg') || stristr($type, 'jpg')) {
-        $imageType = 'jpg';
-    }
+        // Define the image name
+        $image_name = 'uploaded_image_' . time();
+        $image_name .= ($imageType == IMAGETYPE_PNG) ? '.png' : '.jpg';
 
-    // Save the image
-    $imageName = 'captured_image_' . time() . '.' . $imageType;
-    file_put_contents('assets/images/' . $imageName, $imageData);
-
-    $image_name = strval(time()) . ".jpg";
-    $stampPath = "assets/images/stamps/" . $stampFilename;
-
-    // check if stamp file exists
-    if (!file_exists($stampPath)) {
-        header("location: camera.php?error_message=stamp file does not exist");
-        exit();
-    }
-    // check if stamp file is readable
-    if (!is_readable($stampPath)) {
-        header("location: camera.php?error_message=stamp file is not readable");
+        // Move the uploaded file
+        move_uploaded_file($image, 'assets/images/save/' . $image_name);
+    } else {
+        // Handle error
+        header("location: camera.php?error_message=No image provided");
         exit();
     }
 
-    // check image type and create image resource
-    list($width, $height, $imageType) = getimagesize($image);
-    switch ($imageType) {
+    // Load the image for stamp processing
+    switch (exif_imagetype('assets/images/save/' . $image_name)) {
         case IMAGETYPE_JPEG:
-            $im = imagecreatefromjpeg($image);
+            $im = imagecreatefromjpeg('assets/images/save/' . $image_name);
             break;
         case IMAGETYPE_PNG:
-            $im = imagecreatefrompng($image);
+            $im = imagecreatefrompng('assets/images/save/' . $image_name);
             break;
         default:
-            header("location: camera.php?error_message=upload image must be jpg or png");
+            header("location: camera.php?error_message=Invalid image format");
             exit();
     }
 
@@ -72,25 +68,33 @@ if (isset($_POST['upload_image-btn'])) {
     }
 
     // Set the margins for the stamp (top right corner)
-    $marge_right = 10;
+    $marge_right = 30;
     $marge_top = 10;
     $sx = imagesx($stamp);
     $sy = imagesy($stamp);
+    $imWidth = imagesx($im);
+    $imHeight = imagesy($im);
 
-    imagealphablending($im, true); // Setting alpha blending on
-    imagesavealpha($im, true); // Save alpha channel information
+    // Determine the size ratio
+    $maxStampWidth = $imWidth * 0.2;
+    $ratio = $maxStampWidth / $sx;
+    $newStampWidth = intval($maxStampWidth);
+    $newStampHeight = intval($sy * $ratio);
 
-    imagecopy($im, $stamp, imagesx($im) - $sx - $marge_right, $marge_top, 0, 0, imagesx($stamp), imagesy($stamp));
-    // Save the final image as PNG to preserve transparency
-    imagepng($im, "assets/images/save/" . str_replace('.jpg', '.png', $image_name));
+    // Resize the stamp
+    $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
+    imagealphablending($resizedStamp, false);
+    imagesavealpha($resizedStamp, true);
+    imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
 
-    // Save the final image to the assets/images directory
-    //imagejpeg($im, "assets/images/save/" . $image_name);
-
+    // Copy the stamp image onto our photo using the margin offsets and the photo
+    imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
+    imagepng($im, "assets/images/save/" . $image_name);
 
     // Clean up
     imagedestroy($im);
     imagedestroy($stamp);
+    imagedestroy($resizedStamp);
 
     // insert into posts table
     $stmt = $conn->prepare("INSERT INTO posts (user_id, likes, image, caption, hashtags, date, username, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
@@ -111,6 +115,7 @@ if (isset($_POST['upload_image-btn'])) {
 
         header("location: camera.php?success_message=Post has been created successfully&image_name=" . $image_name);
         exit();
+
     } else {
 
         header("location: camera.php?error_message=error occured, try again");
