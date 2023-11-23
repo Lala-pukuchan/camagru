@@ -5,17 +5,31 @@ FROM php:fpm
 WORKDIR /code
 
 # Install additional dependencies
+#RUN apt-get update && apt-get install -y \
+#    libpng-dev \
+#    libjpeg-dev \
+#    libfreetype6-dev \
+#    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+#    && docker-php-ext-install gd \
+#    && docker-php-ext-install mysqli \
+#    && docker-php-ext-install exif
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    ssmtp \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
     && docker-php-ext-install mysqli \
-    && docker-php-ext-install exif
+    && docker-php-ext-install exif \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy your PHP scripts to the container
 COPY ./code /code
+
+# Copy your ssmtp configuration to the container
+COPY ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 # Set appropriate permissions for the web server to read the PHP files
 RUN chmod -R 755 /code
