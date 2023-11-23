@@ -23,23 +23,15 @@
     <div class="camera-image">
 
       <!--display image-->
-      <img id="imagePreview" style="width: 500px;" src="assets/images/1.jpg" alt="" />
+      <?php if (isset($_GET['image_name'])) { ?>
+        <img style="width: 500px;" src="<?php echo "assets/images/" . $_GET['image_name']; ?>" alt="" />
+      <?php } else { ?>
+        <img style="width: 500px;" src="assets/images/1.jpg" alt="" />
+      <?php } ?>
 
-      <!--post-->
       <form action="create_post.php" method="post" enctype="multipart/form-data" class="camera-form">
         <div class="form-group">
-          <input type="file" name="image" id="imageInput" class="form-control" required />
-        </div>
-
-        <!-- Stamp Gallery -->
-        <div class="stamp-gallery">
-          <label>Select a Stamp:</label>
-          <div class="stamp-options">
-            <label>
-              <input type="radio" name="stamp" value="stamp1.png">
-              <img src="assets/images/stamps/stamp1.png" alt="Stamp 1" class="stamp-preview">
-            </label>
-          </div>
+          <input type="file" name="image" class="form-control" required />
         </div>
         <div class="form-group">
           <input type="text" name="caption" class="form-control" placeholder="type captions..." required />
@@ -87,32 +79,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
-<script>
-  document.getElementById('imageInput').addEventListener('change', function (event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-
-      reader.onload = function (e) {
-        document.getElementById('imagePreview').src = e.target.result;
-      };
-
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  });
-</script>
-
-<script>
-  document.getElementById('imageInput').addEventListener('change', function (event) {
-    if (event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        document.getElementById('imagePreview').src = e.target.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  });
-</script>
-
 </body>
 
 </html>
