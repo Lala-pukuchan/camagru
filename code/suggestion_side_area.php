@@ -1,4 +1,4 @@
-<p class="suggestion-text">Suggestions for you</p>
+<p class="suggestion-text">Other users</p>
 
 <?php include("get_suggestion.php"); ?>
 
@@ -23,10 +23,10 @@
                     <?php echo substr($suggestion['bio'], 0, 15); ?>
                 </p>
             </div>
-            <form action="follow_this_person.php" method="post">
+            <!--<form action="follow_this_person.php" method="post">
                 <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">
                 <button class="follow-btn" type="submit" name="follow_btn">follow</button>
-            </form>
+            </form>-->
         </div>
 
     <?php } ?>
