@@ -9,7 +9,8 @@ if (isset($_POST['update_profile_btn'])) {
     $user_id = $_SESSION['id'];
     $user_name = $_POST['username'];
     $bio = $_POST['bio'];
-    $image = $_FILES['image']['tmp_name']; //file
+    $image = $_FILES['image']['tmp_name'];
+    $notification = $_POST['notification'];
 
     if ($image != "") {
         $image_name = $user_name . ".jpg";
@@ -32,10 +33,10 @@ if (isset($_POST['update_profile_btn'])) {
             header("location: edit_profile.php?error_message=Username already exists");
             exit();
         } else {
-            updateUserProfile($conn, $user_name, $bio, $image_name, $user_id, $image);
+            updateUserProfile($conn, $user_name, $bio, $image_name, $notification, $user_id, $image);
         }
     } else {
-        updateUserProfile($conn, $user_name, $bio, $image_name, $user_id, $image);
+        updateUserProfile($conn, $user_name, $bio, $image_name, $notification, $user_id, $image);
     }
 } else {
     header("location: edit_profile.php?error_message=error occured, try again");
@@ -43,10 +44,10 @@ if (isset($_POST['update_profile_btn'])) {
 }
 
 
-function updateUserProfile($conn, $user_name, $bio, $image_name, $user_id, $image)
+function updateUserProfile($conn, $user_name, $bio, $image_name, $notification, $user_id, $image)
 {
-    $stmt = $conn->prepare("UPDATE users SET username = ?, bio = ?, image = ? WHERE id = ?");
-    $stmt->bind_param("sssi", $user_name, $bio, $image_name, $user_id);
+    $stmt = $conn->prepare("UPDATE users SET username = ?, bio = ?, image = ?, notification = ? WHERE id = ?");
+    $stmt->bind_param("sssii", $user_name, $bio, $image_name, $notification, $user_id);
 
     if ($stmt->execute()) {
         if ($image != "") {
@@ -58,6 +59,7 @@ function updateUserProfile($conn, $user_name, $bio, $image_name, $user_id, $imag
         $_SESSION["username"] = $user_name;
         $_SESSION["bio"] = $bio;
         $_SESSION["image"] = $image_name;
+        $_SESSION["notification"] = $notification;
 
         updateProfileImageAndUserNameInPostsTable($conn, $user_name, $image_name, $user_id);
         updateProfileImageAndUserNameInCommentsTable($conn, $user_name, $image_name, $user_id);

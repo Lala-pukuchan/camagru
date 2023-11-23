@@ -10,7 +10,7 @@ if (isset($_POST['login_btn'])) {
     $email = $_POST['email'];
     $password = md5($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post, bio FROM users WHERE email = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post, bio, notification FROM users WHERE email = ? AND password = ?");
 
     $stmt->bind_param("ss", $email, $password);
 
@@ -20,7 +20,7 @@ if (isset($_POST['login_btn'])) {
 
     // if user exists
     if ($stmt->num_rows() > 0) {
-        $stmt->bind_result($id, $username, $email, $image, $followers, $following, $post, $bio);
+        $stmt->bind_result($id, $username, $email, $image, $followers, $following, $post, $bio, $notification);
         $stmt->fetch();
 
         $_SESSION['id'] = $id;
@@ -31,9 +31,9 @@ if (isset($_POST['login_btn'])) {
         $_SESSION['following'] = $following;
         $_SESSION['post'] = $post;
         $_SESSION['bio'] = $bio;
-
-
+        $_SESSION['notification'] = $notification;
         header('location:../index.php');
+
     } else {
         header('location:../login.php?error_message=Email or password is incorrect');
         exit;
