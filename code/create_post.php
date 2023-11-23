@@ -16,6 +16,26 @@ if (isset($_POST['upload_image-btn'])) {
     $like = 0;
     $date = date("Y-m-d H:i:s");
 
+
+    $imageDataUrl = $_POST['capturedImage'];
+
+    // Convert data URL to image data
+    list($type, $imageDataUrl) = explode(';', $imageDataUrl);
+    list(, $imageDataUrl) = explode(',', $imageDataUrl);
+    $imageData = base64_decode($imageDataUrl);
+
+    // Determine the image type
+    $imageType = '';
+    if (stristr($type, 'png')) {
+        $imageType = 'png';
+    } else if (stristr($type, 'jpeg') || stristr($type, 'jpg')) {
+        $imageType = 'jpg';
+    }
+
+    // Save the image
+    $imageName = 'captured_image_' . time() . '.' . $imageType;
+    file_put_contents('assets/images/' . $imageName, $imageData);
+
     $image_name = strval(time()) . ".jpg";
     $stampPath = "assets/images/stamps/" . $stampFilename;
 

@@ -19,6 +19,14 @@
 <?php } ?>
 
 <div class="camera-container">
+
+  <!-- Webcam Feed -->
+  <video id="webcam" style="width: 500px; height: auto;" autoplay></video>
+  <button id="captureButton">Capture Image</button>
+
+  <!-- Image Preview (after capturing) -->
+  <canvas id="canvas" style="width: 500px; height: auto; display: none;"></canvas>
+
   <div class="camera">
     <div class="camera-image">
 
@@ -27,6 +35,13 @@
 
       <!--post-->
       <form action="create_post.php" method="post" enctype="multipart/form-data" class="camera-form">
+
+        <!-- Captured Image -->
+        <div class="form-group">
+          <input type="hidden" name="capturedImage" id="capturedImage">
+        </div>
+
+        <!-- Image Upload -->
         <div class="form-group">
           <input type="file" name="image" id="imageInput" class="form-control" required />
         </div>
@@ -110,6 +125,32 @@
       };
       reader.readAsDataURL(event.target.files[0]);
     }
+  });
+</script>
+<script>
+  const webcamElement = document.getElementById('webcam');
+  const canvasElement = document.getElementById('canvas');
+  const captureButton = document.getElementById('captureButton');
+  const hiddenInput = document.getElementById('capturedImage');
+  const context = canvasElement.getContext('2d');
+
+  // Request access to the webcam
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then((stream) => {
+      webcamElement.srcObject = stream;
+    })
+    .catch((err) => {
+      console.error("Error accessing the webcam", err);
+    });
+
+  // Capture the current frame from the webcam and draw it into the canvas
+  captureButton.addEventListener('click', () => {
+    // Draw the video frame to the canvas
+    context.drawImage(webcamElement, 0, 0, canvasElement.width, canvasElement.height);
+
+    // Convert the canvas image to a data URL and set it as the value of the hidden input
+    let imageDataURL = canvasElement.toDataURL('image/png');
+    hiddenInput.value = imageDataURL;
   });
 </script>
 
