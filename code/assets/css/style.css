@@ -986,3 +986,20 @@ body {
   background: none;
   border: none;
 }
+
+/* stamp gallery */
+.stamp-gallery {
+  margin-top: 15px;
+}
+
+.stamp-options label {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.stamp-preview {
+  width: 100px;
+  height: auto;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+}
