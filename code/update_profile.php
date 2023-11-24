@@ -7,6 +7,7 @@ include("db/connection.php");
 if (isset($_POST['update_profile_btn'])) {
 
     $user_id = $_SESSION['id'];
+    $email = $_POST['email'];
     $user_name = $_POST['username'];
     $image = $_FILES['image']['tmp_name'];
     $notification = $_POST['notification'];
@@ -42,10 +43,10 @@ if (isset($_POST['update_profile_btn'])) {
             header("location: edit_profile.php?error_message=Username already exists");
             exit();
         } else {
-            updateUserProfile($conn, $user_name, $image_name, $notification, $user_id, $image, $newPassword);
+            updateUserProfile($conn, $email, $user_name, $image_name, $notification, $user_id, $image, $newPassword);
         }
     } else {
-        updateUserProfile($conn, $user_name, $image_name, $notification, $user_id, $image, $newPassword);
+        updateUserProfile($conn, $email, $user_name, $image_name, $notification, $user_id, $image, $newPassword);
     }
 } else {
     header("location: edit_profile.php?error_message=error occured, try again");
@@ -53,10 +54,10 @@ if (isset($_POST['update_profile_btn'])) {
 }
 
 
-function updateUserProfile($conn, $user_name, $image_name, $notification, $user_id, $image, $newPassword)
+function updateUserProfile($conn, $email, $user_name, $image_name, $notification, $user_id, $image, $newPassword)
 {
-    $stmt = $conn->prepare("UPDATE users SET username = ?, image = ?, notification = ? WHERE id = ?");
-    $stmt->bind_param("ssii", $user_name, $image_name, $notification, $user_id);
+    $stmt = $conn->prepare("UPDATE users SET email = ?, username = ?, image = ?, notification = ? WHERE id = ?");
+    $stmt->bind_param("sssii", $email, $user_name, $image_name, $notification, $user_id);
 
     if ($stmt->execute()) {
 
@@ -76,6 +77,7 @@ function updateUserProfile($conn, $user_name, $image_name, $notification, $user_
         }
 
         // update session variables
+        $_SESSION["email"] = $email;
         $_SESSION["username"] = $user_name;
         $_SESSION["image"] = $image_name;
         $_SESSION["notification"] = $notification;

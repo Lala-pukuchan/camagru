@@ -22,7 +22,8 @@
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <p class="form-control">email</p>
+          <input type="text" class="form-control" name="email" id="email" placeholder="email"
+            value="<?php echo $_SESSION['email'] ?>" required />
         </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
