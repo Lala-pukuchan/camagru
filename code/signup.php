@@ -81,7 +81,6 @@
             </div>
             <div class="goto">
               <p>Already have an account? <a href="login.php">Login</a></p>
-              <p>Just see the public photos? <a href="#">Public Photos</a></p>
             </div>
           </div>
         </div>

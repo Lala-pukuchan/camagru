@@ -80,11 +80,14 @@ if (isset($_SESSION['id'])) {
               <hr />
             </div>
             <div class="goto">
-              <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
+              <p>Don't have an account? <a href="signup.php"><br>Sign Up</a></p>
+              <p>Want to see gallery without account? <a href="index_public.php">Gallery</a></p>
               <form action="reset_password.php" method="post">
-                <p>Forgot your password? Enter your email to reset it.</p>
-                <input type="email" name="email" placeholder="Enter your email" required>
-                <button type="submit" name="reset_password_btn">Reinitialisation Password</button>
+                <p>Forgot your password? <br> Enter your email to reset it.</p>
+                <div class="login-input">
+                  <input type="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <button type="submit" name="reset_password_btn" class="reset-password-btn mt-3">Reset Password</button>
               </form>
             </div>
           </div>
