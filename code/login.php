@@ -41,6 +41,14 @@ if (isset($_SESSION['id'])) {
             </div>
             <form action="includes/process_login.php" class="login-form" id="login-form" method="POST">
 
+              <!--show success message-->
+              <?php if (isset($_GET['success_message'])) { ?>
+
+                <p class="text-center alert-success mt-4" id="success_message" style="color:green">
+                  <?php echo $_GET['success_message']; ?>
+                </p>
+
+              <?php } ?>
               <!--show error message-->
               <?php if (isset($_GET['error_message'])) { ?>
 
@@ -73,7 +81,11 @@ if (isset($_SESSION['id'])) {
             </div>
             <div class="goto">
               <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
-              <p>Just see the public photos? <a href="#">Public Photos</a></p>
+              <form action="reset_password.php" method="post">
+                <p>Forgot your password? Enter your email to reset it.</p>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit" name="reset_password_btn">Reinitialisation Password</button>
+              </form>
             </div>
           </div>
         </div>
