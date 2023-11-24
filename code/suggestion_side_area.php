@@ -19,9 +19,6 @@
                 <p class="username">
                     <?php echo $suggestion['username']; ?>
                 </p>
-                <p class="sub-text">
-                    <?php echo substr($suggestion['bio'], 0, 15); ?>
-                </p>
             </div>
             <!--<form action="follow_this_person.php" method="post">
                 <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">

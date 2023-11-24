@@ -60,7 +60,8 @@ if (isset($_SESSION['id'])) {
 
               <div class="form-group">
                 <div class="login-input">
-                  <input type="text" name="email" placeholder="Type your email..." required />
+                  <!--<input type="text" name="email" placeholder="Type your email..." required />-->
+                  <input type="text" name="username" placeholder="Type your username..." required />
                 </div>
               </div>
               <div class="form-group">

@@ -68,7 +68,7 @@ if (isset($_POST['upload_image-btn'])) {
     }
 
     // Set the margins for the stamp (top right corner)
-    $marge_right = 30;
+    $marge_right = 50;
     $marge_top = 10;
     $sx = imagesx($stamp);
     $sy = imagesy($stamp);

@@ -60,7 +60,6 @@ if (isset($_POST['other_user_id'])) {
                         <span class="profile-real-name">
                             <?php echo $user['username']; ?>
                         </span>
-                        <?php echo $user['bio']; ?>
                     </p>
                 </div>
             </div>

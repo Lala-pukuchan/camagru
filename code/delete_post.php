@@ -6,8 +6,8 @@ session_start();
 
 if (isset($_POST['delete_post_btn'])) {
   $post_id = $_POST['post_id'];
-  $stmt = $conn->prepare("DELETE FROM posts WHERE id = ?");
-  $stmt->bind_param("i", $post_id);
+  $stmt = $conn->prepare("DELETE FROM posts WHERE id = ? and user_id = ?");
+  $stmt->bind_param("ii", $post_id, $_SESSION['id']);
 
   $_SESSION['post'] = $_SESSION['post'] - 1;
   

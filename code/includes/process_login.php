@@ -7,12 +7,13 @@ include("../db/connection.php");
 
 if (isset($_POST['login_btn'])) {
 
-    $email = $_POST['email'];
+    //$email = $_POST['email'];
+    $username = $_POST['username'];
     $password = md5($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post, bio, notification, email_confirmed FROM users WHERE email = ? AND password = ?");
+    $stmt = $conn->prepare("SELECT id, username, email, image, followers, following, post, bio, notification, email_confirmed FROM users WHERE username = ? AND password = ?");
 
-    $stmt->bind_param("ss", $email, $password);
+    $stmt->bind_param("ss", $username, $password);
 
     $stmt->execute();
 
@@ -44,7 +45,7 @@ if (isset($_POST['login_btn'])) {
         }
 
     } else {
-        header('location:../login.php?error_message=Email or password is incorrect');
+        header('location:../login.php?error_message=username or password is incorrect');
         exit;
     }
 

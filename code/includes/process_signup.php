@@ -10,6 +10,7 @@ if (isset($_POST['signup_btn'])) {
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
     $bio = "not set yet";
+    $image = "default.png";
 
     // make sure password match
     if ($password != $password_confirm) {
@@ -24,8 +25,10 @@ if (isset($_POST['signup_btn'])) {
     }
 
     // check whether user already exists
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? or email = ?");
-    $stmt->bind_param("ss", $username, $email);
+    //$stmt = $conn->prepare("SELECT id FROM users WHERE username = ? or email = ?");
+    //$stmt->bind_param("ss", $username, $email);
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
 
@@ -34,9 +37,9 @@ if (isset($_POST['signup_btn'])) {
         exit;
     } else {
         $email_confirm_token = bin2hex(random_bytes(16));
-        $stmt = $conn->prepare('INSERT INTO users (username, email, password, bio, email_confirm_token) VALUES (?, ?, ?, ?, ?)');
+        $stmt = $conn->prepare('INSERT INTO users (username, email, image, password, bio, email_confirm_token) VALUES (?, ?, ?, ?, ?)');
         $hashed_password = md5($password);
-        $stmt->bind_param('sssss', $username, $email, $hashed_password, $bio, $email_confirm_token);
+        $stmt->bind_param('ssssss', $username, $email, $image, $hashed_password, $bio, $email_confirm_token);
 
         // if user created successfully then return user info
         if ($stmt->execute()) {

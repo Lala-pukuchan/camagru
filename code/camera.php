@@ -25,8 +25,8 @@
 
       <!--select upload or webcam-->
       <div class="selection-buttons">
-        <button type="button" id="useWebcamButton">Use Webcam</button>
-        <button type="button" id="uploadImageButton">Upload Image</button>
+        <button type="button" id="useWebcamButton" class="upload-btn" style="display: inline-block;">Use Webcam</button>
+        <button type="button" id="uploadImageButton" class="upload-btn" style="display: inline-block;">Upload Image</button>
       </div>
 
       <!--post-->
@@ -38,7 +38,7 @@
         <!-- Webcam Feed -->
         <div id="webcamSection" style="display: none;">
           <video id="webcam" style="width: 500px; height: auto;" autoplay></video>
-          <button id="captureButton">Capture Image</button>
+          <button id="captureButton" class="upload-btn" style="width: 100px;">Capture Image</button>
           <canvas id="canvas" style="width: 500px; height: auto; display: none;"></canvas>
         </div>
 
@@ -60,10 +60,18 @@
         <!-- Stamp Gallery -->
         <div class="stamp-gallery">
           <label>Select a Stamp:</label>
-          <div class="stamp-options">
+          <div class="stamp-options mb-3">
             <label>
-              <input type="radio" name="stamp" value="stamp1.png">
+              <input type="radio" name="stamp" value="stamp1.png" checked>
               <img src="assets/images/stamps/stamp1.png" alt="Stamp 1" class="stamp-preview">
+            </label>
+            <label>
+              <input type="radio" name="stamp" value="stamp2.png">
+              <img src="assets/images/stamps/stamp2.png" alt="Stamp 1" class="stamp-preview">
+            </label>
+            <label>
+              <input type="radio" name="stamp" value="stamp3.png">
+              <img src="assets/images/stamps/stamp3.png" alt="Stamp 1" class="stamp-preview">
             </label>
           </div>
         </div>
@@ -177,6 +185,11 @@
     // Convert the canvas image to a data URL and set it as the value of the hidden input
     let imageDataURL = canvasElement.toDataURL('image/png');
     hiddenInput.value = imageDataURL;
+
+    // disactivate capture button
+    captureButton.disabled = true;
+    captureButton.style.color = 'white';
+    captureButton.style.background = 'grey';
   });
 </script>
 
