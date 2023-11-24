@@ -29,3 +29,6 @@ code/.DS_Store
 
 # env file
 .env
+
+# conf file
+conf/ssmtp/*.conf

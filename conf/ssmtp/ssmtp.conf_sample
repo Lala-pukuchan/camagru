@@ -1,0 +1,6 @@
+root=<email>
+mailhub=smtp.gmail.com:587
+AuthUser=<email>
+AuthPass=<app path>
+UseSTARTTLS=YES
+FromLineOverride=YES
