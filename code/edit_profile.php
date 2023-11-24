@@ -30,9 +30,9 @@
             value="<?php echo $_SESSION['username'] ?>" required />
         </div>
         <div class="mb-3">
-          <label for="bio" class="form-label">Bio</label>
-          <textarea name="bio" id="bio" class="form-control" cols="30"
-            rows="3"><?php echo $_SESSION['bio']; ?></textarea>
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" name="password" id="password"
+            placeholder="Enter new password if you wish to change it">
         </div>
         <div class="mb-3">
           <label class="form-label">Notifications</label>

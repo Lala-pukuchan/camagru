@@ -35,6 +35,7 @@ if (isset($_POST['login_btn'])) {
             $_SESSION['post'] = $post;
             $_SESSION['bio'] = $bio;
             $_SESSION['notification'] = $notification;
+            $_SESSION['password'] = $password;
 
             header('location:../index.php');
         } else {

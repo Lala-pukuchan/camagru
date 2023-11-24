@@ -7,9 +7,9 @@
         <p class="username">
             <?php echo $_SESSION['username']; ?>
         </p>
-        <p class="sub-text">
-            <?php echo substr($_SESSION['bio'], 0, 15); ?>
-        </p>
+        <!--<p class="sub-text">
+            <?php /*echo substr($_SESSION['bio'], 0, 15);*/ ?>
+        </p>-->
     </div>
 
     <form action="logout.php" method="get">

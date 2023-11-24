@@ -18,8 +18,8 @@ if (isset($_GET['email_confirm_token'])) {
         $update_stmt->bind_param('s', $token);
         $update_stmt->execute();
 
-        // Redirect to the index page with a success message
-        header('location: index.php?success_message=Registration successful');
+        // Redirect to the login page with a success message
+        header('location: login.php?success_message=Registration successful');
         exit;
     } else {
         // Redirect to an error page or display an error

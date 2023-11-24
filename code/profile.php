@@ -62,14 +62,14 @@
             </span> following</li>-->
         </ul>
       </div>
-      <div class="profile-bio">
+      <!--<div class="profile-bio">
         <p>
           <span class="profile-real-name">
-            <?php echo $_SESSION['username']; ?>
+            <?php /*echo $_SESSION['username'];*/ ?>
           </span>
-          <?php echo $_SESSION['bio']; ?>
+          <?php /*echo $_SESSION['bio'];*/ ?>
         </p>
-      </div>
+      </div>-->
     </div>
   </header>
 </header>
