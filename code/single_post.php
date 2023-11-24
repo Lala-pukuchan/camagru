@@ -98,7 +98,7 @@ if (isset($_GET['post_id'])) {
             </div>
 
           </div>
-          <img class="post-image" src="<?php echo "assets/images/" . $post['image']; ?>" alt="" />
+          <img class="post-image" src="<?php echo "assets/images/save/" . $post['image']; ?>" alt="" />
           <div class="post-content">
             <div class="reaction-wrapper">
               <!--<i class="icon fas fa-heart"></i>
