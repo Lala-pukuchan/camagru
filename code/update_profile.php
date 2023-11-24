@@ -12,6 +12,12 @@ if (isset($_POST['update_profile_btn'])) {
     $image = $_FILES['image']['tmp_name'];
     $notification = $_POST['notification'];
 
+    // check whether username is valid
+    if (!preg_match('/^[a-zA-Z0-9_]{3,20}$/', $user_name)) {
+        header("location: edit_profile.php?error_message=Invalid username");
+        exit();
+    }
+
     if ($image != "") {
         $image_name = $user_name . ".jpg";
     } else {

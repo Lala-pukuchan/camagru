@@ -83,7 +83,7 @@
       <?php foreach ($posts as $post) { ?>
 
         <div class="gallery-item">
-          <img src="<?php echo "assets/images/" . $post['image']; ?>" class="gallery-image" alt="" />
+          <img src="<?php echo "assets/images/save/" . $post['image']; ?>" class="gallery-image" alt="" />
           <div class="gallery-item-info">
             <ul>
               <li class="gallery-item-likes">
@@ -133,7 +133,7 @@
     }
   }
 </script>-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>-->
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
 
 <script>

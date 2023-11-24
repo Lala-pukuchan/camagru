@@ -16,6 +16,12 @@ if (isset($_POST['signup_btn'])) {
         exit;
     }
 
+    // Password complexity check
+    if (!preg_match('/^(?=.*\d)(?=.*[A-Za-z])[0-9A-Za-z!@#$%]{8,}$/', $password)) {
+        header('location:../signup.php?error_message=password not complex enough');
+        exit;
+    }
+
     // check whether user already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE username = ? or email = ?");
     $stmt->bind_param("ss", $username, $email);
@@ -26,9 +32,10 @@ if (isset($_POST['signup_btn'])) {
         header('location:../signup.php?error_message=user already exists');
         exit;
     } else {
-        $stmt = $conn->prepare('INSERT INTO users (username, email, password) VALUES (?, ?, ?)');
+        $email_confirm_token = bin2hex(random_bytes(16));
+        $stmt = $conn->prepare('INSERT INTO users (username, email, password, email_confirm_token) VALUES (?, ?, ?, ?)');
         $hashed_password = md5($password);
-        $stmt->bind_param('sss', $username, $email, $hashed_password);
+        $stmt->bind_param('ssss', $username, $email, $hashed_password, $email_confirm_token);
 
         // if user created successfully then return user info
         if ($stmt->execute()) {
@@ -45,9 +52,24 @@ if (isset($_POST['signup_btn'])) {
             $_SESSION['followers'] = $followers;
             $_SESSION['following'] = $following;
             $_SESSION['post'] = $post;
-            
+
             // redirect to index.php
-            header('location:../index.php');
+            header('location:../signup.php?success_message=please check your email to confirm your registration');
+
+            // send confirmation email
+            $to = $email;
+            $subject = 'Confirm your email';
+            $headers = 'From: webmaster@example.com' . "\r\n" .
+                'Reply-To: webmaster@example.com' . "\r\n" .
+                'X-Mailer: PHP/' . phpversion();
+            $confirmLink = "http://localhost:1080/confirm_email.php?email_confirm_token=" . $email_confirm_token;
+            $message = 'Please click on the following link to confirm your registration: ' . $confirmLink;
+
+            if (!mail($to, $subject, $message, $headers)) {
+                echo $message;
+            } else {
+                echo 'Notification sent successfully.';
+            }
 
         } else {
             header('location:../signup.php?error_message=error occured');

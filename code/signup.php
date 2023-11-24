@@ -29,6 +29,15 @@
             </div>
             <form action="includes/process_signup.php" class="login-form" id="signup-form" method="POST">
 
+              <!--show success message-->
+              <?php if (isset($_GET['success_message'])) { ?>
+
+                <p class="text-center alert-success mt-4" id="success_message" style="color:green">
+                  <?php echo $_GET['success_message']; ?>
+                </p>
+
+              <?php } ?>
+
               <!--show error message-->
               <?php if (isset($_GET['error_message'])) { ?>
 
