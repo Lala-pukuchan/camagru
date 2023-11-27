@@ -5,14 +5,6 @@ FROM php:fpm
 WORKDIR /code
 
 # Install additional dependencies
-#RUN apt-get update && apt-get install -y \
-#    libpng-dev \
-#    libjpeg-dev \
-#    libfreetype6-dev \
-#    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-#    && docker-php-ext-install gd \
-#    && docker-php-ext-install mysqli \
-#    && docker-php-ext-install exif
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -33,3 +25,4 @@ COPY ./conf/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 # Set appropriate permissions for the web server to read the PHP files
 RUN chmod -R 755 /code
+RUN chmod -R 777 /code/assets/images/save/

@@ -23,7 +23,9 @@ services:
     # volumes:
     #   - ./code:/code # will be delted later
   db:
-    image: mysql
+    build:
+      context: .
+      dockerfile: Dockerfile_db
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -38,4 +40,5 @@ services:
     ports:
       - "8080:80"
 volumes:
+  php_data:
   db_data:

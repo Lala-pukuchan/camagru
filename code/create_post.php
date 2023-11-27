@@ -40,7 +40,11 @@ if (isset($_POST['upload_image-btn'])) {
         $image_name .= ($imageType == IMAGETYPE_PNG) ? '.png' : '.jpg';
 
         // Move the uploaded file
-        move_uploaded_file($image, 'assets/images/save/' . $image_name);
+        // move_uploaded_file($image, 'assets/images/save/' . $image_name);
+        if (!move_uploaded_file($image, '/code/assets/images/save/' . $image_name)) {
+            error_log("Failed to move uploaded file.");
+        }
+        
     } else {
         // Handle error
         header("location: camera.php?error_message=No image provided");
@@ -104,7 +108,7 @@ if (isset($_POST['upload_image-btn'])) {
     if ($stmt->execute()) {
 
         // store img in assets/images
-        move_uploaded_file($image, "assets/images/" . $image_name);
+        // move_uploaded_file($image, "assets/images/" . $image_name);
 
         // increase number of post
         $stmt = $conn->prepare("UPDATE users SET post = post + 1 WHERE id = ?");
