@@ -10,12 +10,20 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     ssmtp \
+    git \
+    unzip \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install exif \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Composer globally
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install Cloudinary PHP SDK via Composer
+RUN composer require cloudinary/cloudinary_php
 
 # Copy your PHP scripts to the container
 COPY ./code /code

@@ -1,5 +1,20 @@
 <?php
 
+// config for cloudinary
+require 'vendor/autoload.php';
+
+use Cloudinary\Cloudinary;
+
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => 'dh4r0lwag', 
+        'api_key' => '443722912745622', 
+        'api_secret' => 'XxUvHyvNceEquIr9GS24C1BIiw8'
+    ],
+    'url' => [
+        'secure' => true
+    ]
+]);
 session_start();
 
 include("db/connection.php");
@@ -39,11 +54,35 @@ if (isset($_POST['upload_image-btn'])) {
         $image_name = 'uploaded_image_' . time();
         $image_name .= ($imageType == IMAGETYPE_PNG) ? '.png' : '.jpg';
 
+        // create IM
+        switch ($imageType) {
+            case IMAGETYPE_JPEG:
+                $im = imagecreatefromjpeg($image);
+                break;
+            case IMAGETYPE_PNG:
+                $im = imagecreatefrompng($image);
+                break;
+            default:
+                header("location: camera.php?error_message=Invalid image format");
+                exit();
+        }
+
+        // upload tmp file
+        try {
+            $response = $cloudinary->uploadApi()->upload($image, [
+                'folder' => 'uploads/'
+            ]);
+            $uploadedFileUrl = $response['secure_url'];
+        } catch (Exception $e) {
+            error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+            header("location: camera.php?error_message=Error uploading image");
+            exit();
+        }
         // Move the uploaded file
         // move_uploaded_file($image, 'assets/images/save/' . $image_name);
-        if (!move_uploaded_file($image, '/code/assets/images/save/' . $image_name)) {
-            error_log("Failed to move uploaded file.");
-        }
+        // if (!move_uploaded_file($image, '/code/assets/images/save/' . $image_name)) {
+        //     error_log("Failed to move uploaded file.");
+        // }
         
     } else {
         // Handle error
@@ -52,17 +91,17 @@ if (isset($_POST['upload_image-btn'])) {
     }
 
     // Load the image for stamp processing
-    switch (exif_imagetype('assets/images/save/' . $image_name)) {
-        case IMAGETYPE_JPEG:
-            $im = imagecreatefromjpeg('assets/images/save/' . $image_name);
-            break;
-        case IMAGETYPE_PNG:
-            $im = imagecreatefrompng('assets/images/save/' . $image_name);
-            break;
-        default:
-            header("location: camera.php?error_message=Invalid image format");
-            exit();
-    }
+    // switch (exif_imagetype('assets/images/save/' . $image_name)) {
+    //     case IMAGETYPE_JPEG:
+    //         $im = imagecreatefromjpeg('assets/images/save/' . $image_name);
+    //         break;
+    //     case IMAGETYPE_PNG:
+    //         $im = imagecreatefrompng('assets/images/save/' . $image_name);
+    //         break;
+    //     default:
+    //         header("location: camera.php?error_message=Invalid image format");
+    //         exit();
+    // }
 
     // stamp image resource
     $stamp = imagecreatefrompng($stampPath);
@@ -93,12 +132,30 @@ if (isset($_POST['upload_image-btn'])) {
 
     // Copy the stamp image onto our photo using the margin offsets and the photo
     imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
-    imagepng($im, "assets/images/save/" . $image_name);
+    // imagepng($im, "assets/images/save/" . $image_name);
+    // Start output buffering
+    ob_start();
+    imagepng($im); // Output the image data
+    $imageData = ob_get_contents(); // Get the image data from buffer
+    ob_end_clean(); // End and clean the buffer
 
     // Clean up
     imagedestroy($im);
     imagedestroy($stamp);
     imagedestroy($resizedStamp);
+
+    // Upload the image data to Cloudinary
+    try {
+        $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
+            'folder' => 'uploads/'
+        ]);
+        $uploadedFileUrl = $response['secure_url'];
+        // Now you can use $uploadedFileUrl as needed
+    } catch (Exception $e) {
+        error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+        header("location: camera.php?error_message=Error uploading image");
+        exit();
+    }
 
     // insert into posts table
     $stmt = $conn->prepare("INSERT INTO posts (user_id, likes, image, caption, hashtags, date, username, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
