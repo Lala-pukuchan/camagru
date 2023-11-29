@@ -35,7 +35,7 @@
           <div class="info">
             <div class="user">
               <div class="profile-pic">
-                <img src="<?php echo "assets/images/" . $post['profile_image']; ?>" alt="" />
+                <img src="<?php echo $post['profile_image']; ?>" alt="" />
               </div>
               <p class="username">
                 <?php echo $post["username"]; ?>

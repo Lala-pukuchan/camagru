@@ -71,7 +71,7 @@ if (isset($_GET['post_id'])) {
           <div class="info">
             <div class="user">
               <div class="profile-pic">
-                <img src="<?php echo "assets/images/" . $post['profile_image']; ?>" alt="" />
+                <img src="<?php echo $post['profile_image']; ?>" alt="" />
               </div>
               <p class="username">
                 <?php echo $post["username"]; ?>
@@ -160,7 +160,7 @@ if (isset($_GET['post_id'])) {
 
           </div>
           <div class="comment-wrapper">
-            <img class="icon" src="<?php echo "assets/images/" . $_SESSION['image']; ?>" alt="" />
+            <img class="icon" src="<?php echo $_SESSION['image']; ?>" alt="" />
             <form action="store_comment.php" class="comment-wrapper" method="post">
               <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
               <input type="text" class="comment-box" placeholder="Add a comment" name="comment_text" />

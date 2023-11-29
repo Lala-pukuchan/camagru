@@ -23,7 +23,7 @@
 
     <div class="profile">
       <div class="profile-image">
-        <img src="<?php echo "assets/images/" . $_SESSION['image']; ?>" alt="" />
+        <img src="<?php echo $_SESSION['image']; ?>" alt="" />
       </div>
       <div class="profile-user-setting">
         <h1 class="profile-user-name">

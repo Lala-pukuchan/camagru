@@ -1,5 +1,16 @@
 <?php
 
+// config for cloudinary
+require 'vendor/autoload.php';
+
+use Cloudinary\Cloudinary;
+
+// Include the Cloudinary configuration
+$config = require 'cloudinary/config.php';
+
+// Initialize Cloudinary with the configuration settings
+$cloudinary = new Cloudinary($config);
+
 session_start();
 
 include("db/connection.php");
@@ -72,8 +83,24 @@ function updateUserProfile($conn, $email, $user_name, $image_name, $notification
         }
 
         if ($image != "") {
-            // store image into the folder
-            move_uploaded_file($image, "assets/images/" . $image_name);
+    
+            // upload tmp file
+            global $cloudinary;
+            try {
+                $response = $cloudinary->uploadApi()->upload($image, [
+                    'folder' => 'uploads/'
+                ]);
+                $image_name = $response['secure_url'];
+                $imageStmt = $conn->prepare("UPDATE users SET image = ? WHERE id = ?");
+                $imageStmt->bind_param("si", $image_name, $user_id);
+                $imageStmt->execute();
+            
+            } catch (Exception $e) {
+                error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+                header("location: camera.php?error_message=Error uploading image");
+                exit();
+            }
+        
         }
 
         // update session variables

@@ -12,7 +12,7 @@
                 <form action="other_user_profile.php" id="suggestion_form<?php echo $suggestion["id"]; ?>" method="post">
                     <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">
                     <img onclick="document.getElementById('suggestion_form' + <?php echo $suggestion['id']; ?>).submit();"
-                        src="<?php echo "assets/images/" . $suggestion["image"]; ?>" alt="" />
+                        src="<?php echo $suggestion["image"]; ?>" alt="" />
                 </form>
             </div>
             <div>
@@ -20,10 +20,6 @@
                     <?php echo $suggestion['username']; ?>
                 </p>
             </div>
-            <!--<form action="follow_this_person.php" method="post">
-                <input type="hidden" value="<?php echo $suggestion['id']; ?>" name="other_user_id">
-                <button class="follow-btn" type="submit" name="follow_btn">follow</button>
-            </form>-->
         </div>
 
     <?php } ?>

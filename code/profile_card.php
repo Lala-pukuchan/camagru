@@ -1,7 +1,7 @@
 <!--profile-->
 <div class="profile-card">
     <div class="profile-pic">
-        <img src=<?php echo "assets/images/" . $_SESSION['image']; ?> alt="" />
+        <img src=<?php echo $_SESSION['image']; ?> alt="" />
     </div>
     <div>
         <p class="username">

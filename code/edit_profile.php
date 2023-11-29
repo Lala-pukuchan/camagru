@@ -17,7 +17,7 @@
 
       <form action="update_profile.php" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-          <img src="<?php echo "assets/images/" . $_SESSION['image']; ?>" class="edit-profile-image" alt="" />
+          <img src="<?php echo $_SESSION['image']; ?>" class="edit-profile-image" alt="" />
           <input type="file" name="image" class="form-control" />
         </div>
         <div class="mb-3">

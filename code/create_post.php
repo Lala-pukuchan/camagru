@@ -76,11 +76,6 @@ if (isset($_POST['upload_image-btn'])) {
             header("location: camera.php?error_message=Error uploading image");
             exit();
         }
-        // Move the uploaded file
-        // move_uploaded_file($image, 'assets/images/save/' . $image_name);
-        // if (!move_uploaded_file($image, '/code/assets/images/save/' . $image_name)) {
-        //     error_log("Failed to move uploaded file.");
-        // }
         
     } else {
         // Handle error
