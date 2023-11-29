@@ -10,7 +10,7 @@ if (isset($_POST['signup_btn'])) {
     $password = $_POST['password'];
     $password_confirm = $_POST['password_confirm'];
     $bio = "not set yet";
-    $image = "default.png";
+    $image = "https://res.cloudinary.com/dh4r0lwag/image/upload/v1701272255/uploads/a30qhsalpfrquzrvyknj.jpg";
 
     // make sure password match
     if ($password != $password_confirm) {
@@ -37,7 +37,7 @@ if (isset($_POST['signup_btn'])) {
         exit;
     } else {
         $email_confirm_token = bin2hex(random_bytes(16));
-        $stmt = $conn->prepare('INSERT INTO users (username, email, image, password, bio, email_confirm_token) VALUES (?, ?, ?, ?, ?)');
+        $stmt = $conn->prepare('INSERT INTO users (username, email, image, password, bio, email_confirm_token) VALUES (?, ?, ?, ?, ?, ?)');
         $hashed_password = md5($password);
         $stmt->bind_param('ssssss', $username, $email, $image, $hashed_password, $bio, $email_confirm_token);
 

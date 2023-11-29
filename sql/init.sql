@@ -1,12 +1,9 @@
-CREATE DATABASE IF NOT EXISTS `mydatabase`;
-USE `mydatabase`;
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Nov 24, 2023 at 10:55 AM
+-- Generation Time: Nov 29, 2023 at 04:38 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.8
 
@@ -45,7 +42,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `post_id`, `user_id`, `username`, `profile_image`, `comment_text`, `date`) VALUES
-(19, 45, 10, 'ruru', 'ruru.jpg', 'This is beautiful.', '2023-11-24 10:10:02'),
+(19, 45, 10, 'ruru', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701275383/uploads/d0tinunhhhdauiutcrxy.png', 'This is beautiful.', '2023-11-24 10:10:02'),
 (20, 48, 11, 'lala', 'logo.png', 'This is beautiful.', '2023-11-24 10:30:44');
 
 -- --------------------------------------------------------
@@ -95,8 +92,9 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `user_id`, `likes`, `image`, `caption`, `hashtags`, `date`, `username`, `profile_image`) VALUES
-(48, 10, 0, 'uploaded_image_1700821814.jpg', 'stamp test1', '#stamp', '2023-11-24 10:30:14', 'ruru', 'ruru.jpg'),
-(49, 10, 0, 'captured_image_1700823198.png', 'stamp test1', '#stamp', '2023-11-24 10:53:18', 'ruru', 'ruru.jpg');
+(50, 10, 0, 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701271394/uploads/eqbhtkmsdhust8rlmzlj.png', 'a', 'a', '2023-11-29 15:23:11', 'ruru', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701275383/uploads/d0tinunhhhdauiutcrxy.png'),
+(51, 10, 0, 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701273325/uploads/apednoh0bpzavm6gcjbm.png', 'b', 'b', '2023-11-29 15:55:22', 'ruru', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701275383/uploads/d0tinunhhhdauiutcrxy.png'),
+(52, 10, 0, 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701273529/uploads/vuaqn9xvs8on8dgy4yj5.png', 'c', 'c', '2023-11-29 15:58:46', 'ruru', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701275383/uploads/d0tinunhhhdauiutcrxy.png');
 
 -- --------------------------------------------------------
 
@@ -124,8 +122,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `image`, `followers`, `following`, `post`, `bio`, `notification`, `email_confirm_token`, `email_confirmed`) VALUES
-(10, 'ruru', 'aed64604da40b52ea0edf963840fc53d', 'ruruover1105@gmail.com', 'ruru.jpg', 0, 0, 5, 'not set yet', 1, 'a82b7ef3d096908202be3f333354e5dc', 1),
-(11, 'lala', 'aed64604da40b52ea0edf963840fc53d', 'ruruover1105@gmail.com', 'default.png', 0, 0, 0, 'not set yet', 1, '27e164730a30915c0cbd064dbea799be', 1);
+(10, 'ruru', 'aed64604da40b52ea0edf963840fc53d', 'ruruover1105@gmail.com', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701275383/uploads/d0tinunhhhdauiutcrxy.png', 0, 0, 8, 'not set yet', 1, 'a82b7ef3d096908202be3f333354e5dc', 1),
+(12, 'lala', 'aed64604da40b52ea0edf963840fc53d', 'ruruover1105@gmail.com', 'https://res.cloudinary.com/dh4r0lwag/image/upload/v1701272255/uploads/a30qhsalpfrquzrvyknj.jpg', 0, 0, 0, 'not set yet', 1, '43d1232bc6d34e760be685f99fce4e26', 1);
 
 --
 -- Indexes for dumped tables
@@ -187,13 +185,13 @@ ALTER TABLE `likes`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
