@@ -5,19 +5,17 @@ require 'vendor/autoload.php';
 
 use Cloudinary\Cloudinary;
 
-$cloudinary = new Cloudinary([
-    'cloud' => [
-        'cloud_name' => 'dh4r0lwag', 
-        'api_key' => '443722912745622', 
-        'api_secret' => 'XxUvHyvNceEquIr9GS24C1BIiw8'
-    ],
-    'url' => [
-        'secure' => true
-    ]
-]);
+// Include the Cloudinary configuration
+$config = require 'cloudinary/config.php';
+
+// Initialize Cloudinary with the configuration settings
+$cloudinary = new Cloudinary($config);
+
 session_start();
 
 include("db/connection.php");
+
+include("cloudinary/config.php");
 
 if (isset($_POST['upload_image-btn'])) {
 
@@ -150,7 +148,6 @@ if (isset($_POST['upload_image-btn'])) {
             'folder' => 'uploads/'
         ]);
         $uploadedFileUrl = $response['secure_url'];
-        // Now you can use $uploadedFileUrl as needed
     } catch (Exception $e) {
         error_log('Error uploading to Cloudinary: ' . $e->getMessage());
         header("location: camera.php?error_message=Error uploading image");
@@ -163,9 +160,6 @@ if (isset($_POST['upload_image-btn'])) {
 
 
     if ($stmt->execute()) {
-
-        // store img in assets/images
-        // move_uploaded_file($image, "assets/images/" . $image_name);
 
         // increase number of post
         $stmt = $conn->prepare("UPDATE users SET post = post + 1 WHERE id = ?");
