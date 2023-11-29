@@ -89,7 +89,6 @@ if (isset($_GET['post_id'])) {
             <div class="popup" id="popup">
               <div class="popup-window">
                 <span class="close-popup" id="close_popup">&times;</span>
-                <!--<a href="edit_post.php?post_id=<?php /*echo $post['id']; */?>">Edit Post</a>-->
                 <form action="delete_post.php" method="post">
                   <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
                   <input type="submit" name="delete_post_btn" value="Delete Post" class="delete-post-btn">

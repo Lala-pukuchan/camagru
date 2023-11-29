@@ -14,7 +14,7 @@ if (isset($_POST['delete_post_btn'])) {
   if ($stmt->execute()) {
     header("location: profile.php?success_message=post deleted succesfully");
   } else {
-    header("location: edit_post.php?error_message=error occurred. try again.");
+    header("location: profile.php?error_message=error occurred. try again.");
   }
   exit();
 
