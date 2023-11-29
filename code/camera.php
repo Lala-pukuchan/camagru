@@ -101,7 +101,7 @@
       <?php foreach ($posts as $post) { ?>
 
         <div class="gallery-item" style="flex: 1 0 2rem; !important">
-          <img src="<?php echo "assets/images/save/" . $post['image']; ?>" class="gallery-image" alt="" />
+          <img src="<?php echo $post['image']; ?>" class="gallery-image" alt="" />
           <div class="gallery-item-info">
             <ul>
               <li class="gallery-item-likes">

@@ -48,7 +48,7 @@
             </a>
 
           </div>
-          <img class="post-image" src="<?php echo "assets/images/save/" . $post['image']; ?>" alt="" />
+          <img class="post-image" src="<?php echo $post['image']; ?>" alt="" />
           <div class="post-content">
             <div class="reaction-wrapper">
 

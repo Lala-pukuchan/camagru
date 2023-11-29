@@ -159,7 +159,7 @@ if (isset($_POST['upload_image-btn'])) {
 
     // insert into posts table
     $stmt = $conn->prepare("INSERT INTO posts (user_id, likes, image, caption, hashtags, date, username, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("iissssss", $id, $like, $image_name, $caption, $hashtags, $date, $username, $profile_image);
+    $stmt->bind_param("iissssss", $id, $like, $uploadedFileUrl, $caption, $hashtags, $date, $username, $profile_image);
 
 
     if ($stmt->execute()) {

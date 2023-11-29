@@ -33,4 +33,3 @@ COPY ./conf/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf
 
 # Set appropriate permissions for the web server to read the PHP files
 RUN chmod -R 755 /code
-RUN chmod -R 777 /code/assets/images/save/
