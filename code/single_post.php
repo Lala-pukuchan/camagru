@@ -126,30 +126,6 @@ if (isset($_GET['post_id'])) {
                     <?php echo date("M, Y,", strtotime($comment['date'])); ?>
                   </span>
                 </p>
-
-                <!--manage comments-->
-                <?php /*if ($comment['user_id'] == $_SESSION['id']) { ?>
-                 <button onclick="" class="profile-btn profile-settings-btn" id="options_btn" aria-label="profile settings">
-                   <i class="fas fa-edit"></i>
-                 </button>
-
-                 <div class="popup" id="popup-comment<?php echo $comment['id']; ?>">
-                   <div class="popup-window">
-                     <span
-                       onclick="document.getElementById('popup-comment<?php echo $comment['id']; ?>').style.display = 'none';"
-                       class="close-popup" id="close_popup<?php echo $comment['id']; ?>"
-                       style="font-size: 30px;">&times;</span>
-                     <a href="edit_comment.php?commnet_id=<?php echo $comment['id']; ?>&post_id=<?php echo $post['id']; ?>">Edit
-                       Comment</a>
-                     <form action="delete_comment.php" method="post">
-                       <input type="hidden" name="comment_id" value="<?php echo $comment['id']; ?>">
-                       <input type="text" name="post_id" value="<?php echo $post['id']; ?>">
-                       <input class="delete-comment-btn" type="submit" name="delete_comment_btn" value="Delete Comment">
-                     </form>
-                   </div>
-                 </div>
-               <?php } */?>
-
               </div>
             <?php } ?>
 
