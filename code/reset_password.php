@@ -4,7 +4,17 @@ session_start();
 include("db/connection.php");
 
 if (isset($_POST['reset_password_btn'])) {
-    $email = $_POST['email'];
+
+    // posted username
+    $username = $_POST['username'];
+
+    // get email from db
+    $stmtEmail = $conn->prepare("SELECT email FROM users WHERE username = ?");
+    $stmtEmail->bind_param("s", $username);
+    $stmtEmail->execute();
+    $stmtEmail->bind_result($email);
+    $stmtEmail->fetch();
+    $stmtEmail->close();
 
     // Generate a random temporary password
     $temporaryPassword = bin2hex(random_bytes(8)); // 16 characters long
@@ -30,6 +40,7 @@ if (isset($_POST['reset_password_btn'])) {
     } else {
         header('location:../login.php?error_message=Failed to update the password.');
     }
+    $stmt->close();
 }
 
 ?>

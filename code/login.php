@@ -85,9 +85,9 @@ if (isset($_SESSION['id'])) {
               <p>Don't have an account? <a href="signup.php"><br>Sign Up</a></p>
               <p>Want to see gallery without account? <a href="index_public.php">Gallery</a></p>
               <form action="reset_password.php" method="post">
-                <p>Forgot your password? <br> Enter your email to reset it.</p>
+                <p>Forgot your password? <br> Enter your username to reset it.</p>
                 <div class="login-input">
-                  <input type="email" name="email" placeholder="Enter your email" required>
+                  <input type="text" name="username" placeholder="Enter your username" required>
                 </div>
                 <button type="submit" name="reset_password_btn" class="reset-password-btn mt-3">Reset Password</button>
               </form>
