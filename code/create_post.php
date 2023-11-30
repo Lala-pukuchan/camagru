@@ -33,6 +33,7 @@ if (isset($_POST['upload_image-btn'])) {
 
     // Determine if the image is uploaded or captured
     if ($selectedOption == 'webcam') {
+
         // Process captured webcam image
         $imageDataUrl = $_POST['capturedImage'];
         list(, $imageDataUrl) = explode(',', $imageDataUrl);
@@ -41,9 +42,42 @@ if (isset($_POST['upload_image-btn'])) {
         // Define the image name
         $image_name = 'captured_image_' . time() . '.png';
 
-        // Save the image
-        file_put_contents('assets/images/save/' . $image_name, $imageData);
+        // Create image resource from base64 string
+        $im = imagecreatefromstring($imageData);
+
+        // Create a data stream from the decoded image data
+        // $imageDataStream = fopen('data://text/plain;base64,' . base64_encode($imageData), 'r');
+        // Upload the stamped image data to Cloudinary
+        try {
+            $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
+                'folder' => 'uploads/'
+            ]);
+            $uploadedFileUrl = $response['secure_url'];
+        } catch (Exception $e) {
+            error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+            header("location: camera.php?error_message=Error uploading image");
+            exit();
+        }
+        // upload tmp file
+        // try {
+        //     $response = $cloudinary->uploadApi()->upload($imageDataStream, [
+        //         'folder' => 'uploads/',
+        //         'resource_type' => 'image'
+        //     ]);
+        //     $uploadedFileUrl = $response['secure_url'];
+        //     fclose($imageDataStream);
+        // } catch (Exception $e) {
+        //     error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+        //     // close stream in case of error
+        //     if (is_resource($imageDataStream)) {
+        //         fclose($imageDataStream);
+        //     }
+        //     header("location: camera.php?error_message=Error uploading image without stamp");
+        //     exit();
+        // }
+
     } elseif ($selectedOption == 'upload' && isset($_FILES['image'])) {
+
         // Process uploaded image
         $image = $_FILES['image']['tmp_name'];
         $imageType = exif_imagetype($image);
@@ -73,7 +107,7 @@ if (isset($_POST['upload_image-btn'])) {
             $uploadedFileUrl = $response['secure_url'];
         } catch (Exception $e) {
             error_log('Error uploading to Cloudinary: ' . $e->getMessage());
-            header("location: camera.php?error_message=Error uploading image");
+            header("location: camera.php?error_message=Error uploading image without stamp");
             exit();
         }
         
@@ -83,77 +117,68 @@ if (isset($_POST['upload_image-btn'])) {
         exit();
     }
 
-    // Load the image for stamp processing
-    // switch (exif_imagetype('assets/images/save/' . $image_name)) {
-    //     case IMAGETYPE_JPEG:
-    //         $im = imagecreatefromjpeg('assets/images/save/' . $image_name);
-    //         break;
-    //     case IMAGETYPE_PNG:
-    //         $im = imagecreatefrompng('assets/images/save/' . $image_name);
-    //         break;
-    //     default:
-    //         header("location: camera.php?error_message=Invalid image format");
-    //         exit();
-    // }
+    // put stamp if stamp is selected
+    if ($stampFilename !== 'no_stamp') {
 
-    // stamp image resource
-    $stamp = imagecreatefrompng($stampPath);
-    if (!$stamp) {
+        // stamp image resource
+        $stamp = imagecreatefrompng($stampPath);
+        if (!$stamp) {
+            imagedestroy($im);
+            die("Failed to create stamp image from file");
+        }
+
+        // Set the margins for the stamp (top right corner)
+        $marge_right = 50;
+        $marge_top = 10;
+        $sx = imagesx($stamp);
+        $sy = imagesy($stamp);
+        $imWidth = imagesx($im);
+        $imHeight = imagesy($im);
+
+        // Determine the size ratio
+        $maxStampWidth = $imWidth * 0.2;
+        $ratio = $maxStampWidth / $sx;
+        $newStampWidth = intval($maxStampWidth);
+        $newStampHeight = intval($sy * $ratio);
+
+        // Resize the stamp
+        $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
+        imagealphablending($resizedStamp, false);
+        imagesavealpha($resizedStamp, true);
+        imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
+
+        // Copy the stamp image onto our photo using the margin offsets and the photo
+        imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
+
+        // Start output buffering
+        ob_start();
+        imagepng($im); // Output the image data
+        $imageData = ob_get_contents(); // Get the image data from buffer
+        ob_end_clean(); // End and clean the buffer
+
+        // Clean up
         imagedestroy($im);
-        die("Failed to create stamp image from file");
-    }
+        imagedestroy($stamp);
+        imagedestroy($resizedStamp);
 
-    // Set the margins for the stamp (top right corner)
-    $marge_right = 50;
-    $marge_top = 10;
-    $sx = imagesx($stamp);
-    $sy = imagesy($stamp);
-    $imWidth = imagesx($im);
-    $imHeight = imagesy($im);
-
-    // Determine the size ratio
-    $maxStampWidth = $imWidth * 0.2;
-    $ratio = $maxStampWidth / $sx;
-    $newStampWidth = intval($maxStampWidth);
-    $newStampHeight = intval($sy * $ratio);
-
-    // Resize the stamp
-    $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
-    imagealphablending($resizedStamp, false);
-    imagesavealpha($resizedStamp, true);
-    imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
-
-    // Copy the stamp image onto our photo using the margin offsets and the photo
-    imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
-    // imagepng($im, "assets/images/save/" . $image_name);
-    // Start output buffering
-    ob_start();
-    imagepng($im); // Output the image data
-    $imageData = ob_get_contents(); // Get the image data from buffer
-    ob_end_clean(); // End and clean the buffer
-
-    // Clean up
-    imagedestroy($im);
-    imagedestroy($stamp);
-    imagedestroy($resizedStamp);
-
-    // Upload the image data to Cloudinary
-    try {
-        $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
-            'folder' => 'uploads/'
-        ]);
-        $uploadedFileUrl = $response['secure_url'];
-    } catch (Exception $e) {
-        error_log('Error uploading to Cloudinary: ' . $e->getMessage());
-        header("location: camera.php?error_message=Error uploading image");
-        exit();
+        // Upload the stamped image data to Cloudinary
+        try {
+            $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
+                'folder' => 'uploads/'
+            ]);
+            $uploadedFileUrl = $response['secure_url'];
+        } catch (Exception $e) {
+            error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+            header("location: camera.php?error_message=Error uploading image");
+            exit();
+        }
     }
 
     // insert into posts table
     $stmt = $conn->prepare("INSERT INTO posts (user_id, likes, image, caption, hashtags, date, username, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("iissssss", $id, $like, $uploadedFileUrl, $caption, $hashtags, $date, $username, $profile_image);
 
-
+    // update post number in user table
     if ($stmt->execute()) {
 
         // increase number of post
@@ -161,17 +186,19 @@ if (isset($_POST['upload_image-btn'])) {
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
+        // update session
         $_SESSION["post"] = $_SESSION["post"] + 1;
 
+        // redirect with success message
         header("location: camera.php?success_message=Post has been created successfully&image_name=" . $image_name);
         exit();
 
     } else {
 
+        // redirect with error message
         header("location: camera.php?error_message=error occured, try again");
         exit();
     }
-
 
 } else {
 

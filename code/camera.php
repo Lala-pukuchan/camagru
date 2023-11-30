@@ -46,7 +46,7 @@
         <div id="uploadImageSection" style="display: none;">
           <div class="camera">
             <div class="camera-image">
-              <img id="imagePreview" style="width: 500px;" src="assets/images/1.jpg" alt="" />
+              <img id="imagePreview" style="width: 500px;" src="assets/images/screen1.jpg" alt="" />
               <input type="file" name="image" id="imageInput" class="form-control" />
             </div>
           </div>
@@ -73,6 +73,10 @@
               <input type="radio" name="stamp" value="stamp3.png">
               <img src="assets/images/stamps/stamp3.png" alt="Stamp 1" class="stamp-preview">
             </label>
+            <div>
+              <input type="radio" id="no_stamp" name="stamp" value="no_stamp" />
+              <label for="no_stamp" style="color:black;">No Stamp</label>
+            </div>
           </div>
         </div>
         <div class="form-group">

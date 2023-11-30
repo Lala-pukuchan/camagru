@@ -25,7 +25,8 @@ if (isset($_SESSION['id'])) {
   <div class="container">
     <div class="main-container">
       <div class="main-content">
-        <div class="slide-container" style="background-image: url('assets/images/mobile-frame.png')">
+        <!-- <div class="slide-container" style="background-image: url('assets/images/mobile-frame.png')"> -->
+        <div class="slide-container">
           <div class="slide-content" id="slide-content">
             <img src="assets/images/screen1.png" class="active" alt="screen1" />
             <img src="assets/images/screen2.png" alt="screen2" />

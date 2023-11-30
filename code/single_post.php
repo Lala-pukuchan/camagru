@@ -119,7 +119,7 @@ if (isset($_GET['post_id'])) {
             <!--comments-->
             <?php foreach ($comments as $comment) { ?>
               <div class="comment-element">
-                <img src="<?php echo "assets/images/" . $comment['profile_image']; ?>" class="icon" alt="">
+                <img src="<?php echo $comment['profile_image']; ?>" class="icon" alt="">
                 <p>
                   <?php echo $comment['comment_text']; ?>
                   <span>
