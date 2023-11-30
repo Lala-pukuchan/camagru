@@ -30,7 +30,7 @@ if (isset($_POST['other_user_id'])) {
 
             <div class="profile">
                 <div class="profile-image">
-                    <img src="<?php echo "assets/images/" . $user['image']; ?>" alt="" />
+                    <img src="<?php echo $user['image']; ?>" alt="" />
                 </div>
                 <div class="profile-user-setting" style="width: 35%; text-align: center">
                     <h1 class="profile-user-name">
@@ -42,18 +42,7 @@ if (isset($_POST['other_user_id'])) {
                         <li><span class="profile-stat-count">
                                 <?php echo $user['post']; ?>
                             </span> posts</li>
-                        <li><span class="profile-stat-count">
-                                <?php echo $user['followers']; ?>
-                            </span> followers</li>
-                        <li><span class="profile-stat-count">
-                                <?php echo $user['following']; ?>
-                            </span> following</li>
                     </ul>
-                    <form action="">
-                        <button type="submit" class="follow-btn-user-profile">
-                            Follow
-                        </button>
-                    </form>
                 </div>
                 <div class="profile-bio" style="text-align: center; width: 100%">
                     <p style="text-align: center">
@@ -77,7 +66,7 @@ if (isset($_POST['other_user_id'])) {
             <?php foreach ($posts as $post) { ?>
 
                 <div class="gallery-item">
-                    <img src="<?php echo "assets/images/" . $post['image']; ?>" class="gallery-image" alt="" />
+                    <img src="<?php echo $post['image']; ?>" class="gallery-image" alt="" />
                     <div class="gallery-item-info">
                         <ul>
                             <li class="gallery-item-likes">
