@@ -100,7 +100,6 @@ if (isset($_POST['other_user_id'])) {
 </main>
 
 <!--script-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/5d47e6cf8c.js"></script>
 
 </body>
