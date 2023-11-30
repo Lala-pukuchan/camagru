@@ -58,7 +58,7 @@
         </div>
 
         <!-- Stamp Gallery -->
-        <div class="stamp-gallery">
+        <!-- <div class="stamp-gallery">
           <label>Select a Stamp:</label>
           <div class="stamp-options mb-3">
             <label>
@@ -78,7 +78,30 @@
               <label for="no_stamp" style="color:black;">No Stamp</label>
             </div>
           </div>
+        </div> -->
+        <div class="stamp-gallery">
+            <label>Select a Stamp:</label>
+            <div class="stamp-options mb-3">
+                <label>
+                    <input type="checkbox" name="stamp[]" value="stamp1.png">
+                    <img src="assets/images/stamps/stamp1.png" alt="Stamp 1" class="stamp-preview">
+                </label>
+                <label>
+                    <input type="checkbox" name="stamp[]" value="stamp2.png">
+                    <img src="assets/images/stamps/stamp2.png" alt="Stamp 2" class="stamp-preview">
+                </label>
+                <label>
+                    <input type="checkbox" name="stamp[]" value="stamp3.png">
+                    <img src="assets/images/stamps/stamp3.png" alt="Stamp 3" class="stamp-preview">
+                </label>
+                <!-- No stamp option -->
+                <div>
+                    <input type="checkbox" id="no_stamp" name="stamp[]" value="no_stamp" />
+                    <label for="no_stamp" style="color:black;">No Stamp</label>
+                </div>
+            </div>
         </div>
+
         <div class="form-group">
           <input type="text" name="caption" class="form-control" placeholder="type captions..." required />
         </div>
@@ -194,6 +217,29 @@
     captureButton.style.color = 'white';
     captureButton.style.background = 'grey';
   });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const noStampCheckbox = document.getElementById('no_stamp');
+        const stampCheckboxes = document.querySelectorAll('input[name="stamp[]"]');
+
+        noStampCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Disable all other stamp checkboxes
+                stampCheckboxes.forEach(function(checkbox) {
+                    if (checkbox !== noStampCheckbox) {
+                        checkbox.checked = false;
+                        checkbox.disabled = true;
+                    }
+                });
+            } else {
+                // Enable all other stamp checkboxes
+                stampCheckboxes.forEach(function(checkbox) {
+                    checkbox.disabled = false;
+                });
+            }
+        });
+    });
 </script>
 
 </body>

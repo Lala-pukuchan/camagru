@@ -25,8 +25,8 @@ if (isset($_POST['upload_image-btn'])) {
     $caption = $_POST['caption'];
     $hashtags = $_POST['hashtags'];
     $image = $_FILES['image']['tmp_name'];
-    $stampFilename = $_POST['stamp'];
-    $stampPath = "assets/images/stamps/" . $stampFilename;
+    // $stampFilename = $_POST['stamp'];
+    // $stampPath = "assets/images/stamps/" . $stampFilename;
     $like = 0;
     $date = date("Y-m-d H:i:s");
     $selectedOption = $_POST['selectedOption'];
@@ -46,8 +46,6 @@ if (isset($_POST['upload_image-btn'])) {
         $im = imagecreatefromstring($imageData);
 
         // Create a data stream from the decoded image data
-        // $imageDataStream = fopen('data://text/plain;base64,' . base64_encode($imageData), 'r');
-        // Upload the stamped image data to Cloudinary
         try {
             $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
                 'folder' => 'uploads/'
@@ -58,23 +56,6 @@ if (isset($_POST['upload_image-btn'])) {
             header("location: camera.php?error_message=Error uploading image");
             exit();
         }
-        // upload tmp file
-        // try {
-        //     $response = $cloudinary->uploadApi()->upload($imageDataStream, [
-        //         'folder' => 'uploads/',
-        //         'resource_type' => 'image'
-        //     ]);
-        //     $uploadedFileUrl = $response['secure_url'];
-        //     fclose($imageDataStream);
-        // } catch (Exception $e) {
-        //     error_log('Error uploading to Cloudinary: ' . $e->getMessage());
-        //     // close stream in case of error
-        //     if (is_resource($imageDataStream)) {
-        //         fclose($imageDataStream);
-        //     }
-        //     header("location: camera.php?error_message=Error uploading image without stamp");
-        //     exit();
-        // }
 
     } elseif ($selectedOption == 'upload' && isset($_FILES['image'])) {
 
@@ -117,49 +98,62 @@ if (isset($_POST['upload_image-btn'])) {
         exit();
     }
 
-    // put stamp if stamp is selected
-    if ($stampFilename !== 'no_stamp') {
+    // Your stamp positioning logic here
+    $marge_right = 50; // This could be dynamic based on the number of stamps
+    $marge_top = 10;   // This could also be dynamic
 
-        // stamp image resource
-        $stamp = imagecreatefrompng($stampPath);
-        if (!$stamp) {
+    // Check if at least one stamp is selected and 'no_stamp' is not selected
+    if (isset($_POST['stamp']) && !in_array('no_stamp', $_POST['stamp'])) {
+
+        foreach ($_POST['stamp'] as $index => $stampFilename) {
+
+            $stampPath = "assets/images/stamps/" . $stampFilename;
+
+            // Stamp image resource
+            $stamp = imagecreatefrompng($stampPath);
+            if (!$stamp) {
+                imagedestroy($im);
+                die("Failed to create stamp image from file");
+            }
+
+            // Adjust margins for subsequent stamps
+            if ($index > 0) {
+                $marge_right += 50 * $index; // Increment right margin for each stamp
+                $marge_top += 30 * $index;   // Increment top margin for each stamp (you can adjust this value as needed)
+            }
+
+            $sx = imagesx($stamp);
+            $sy = imagesy($stamp);
+            $imWidth = imagesx($im);
+            $imHeight = imagesy($im);
+
+            // Determine the size ratio
+            $maxStampWidth = $imWidth * 0.2;
+            $ratio = $maxStampWidth / $sx;
+            $newStampWidth = intval($maxStampWidth);
+            $newStampHeight = intval($sy * $ratio);
+
+            // Resize the stamp
+            $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
+            imagealphablending($resizedStamp, false);
+            imagesavealpha($resizedStamp, true);
+            imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
+
+            // Copy the stamp image onto our photo using the margin offsets and the photo
+            imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
+
+            // Start output buffering
+            ob_start();
+            imagepng($im); // Output the image data
+            $imageData = ob_get_contents(); // Get the image data from buffer
+            ob_end_clean(); // End and clean the buffer
+
+            // Clean up
             imagedestroy($im);
-            die("Failed to create stamp image from file");
+            imagedestroy($stamp);
+            imagedestroy($resizedStamp);
+
         }
-
-        // Set the margins for the stamp (top right corner)
-        $marge_right = 50;
-        $marge_top = 10;
-        $sx = imagesx($stamp);
-        $sy = imagesy($stamp);
-        $imWidth = imagesx($im);
-        $imHeight = imagesy($im);
-
-        // Determine the size ratio
-        $maxStampWidth = $imWidth * 0.2;
-        $ratio = $maxStampWidth / $sx;
-        $newStampWidth = intval($maxStampWidth);
-        $newStampHeight = intval($sy * $ratio);
-
-        // Resize the stamp
-        $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
-        imagealphablending($resizedStamp, false);
-        imagesavealpha($resizedStamp, true);
-        imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
-
-        // Copy the stamp image onto our photo using the margin offsets and the photo
-        imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
-
-        // Start output buffering
-        ob_start();
-        imagepng($im); // Output the image data
-        $imageData = ob_get_contents(); // Get the image data from buffer
-        ob_end_clean(); // End and clean the buffer
-
-        // Clean up
-        imagedestroy($im);
-        imagedestroy($stamp);
-        imagedestroy($resizedStamp);
 
         // Upload the stamped image data to Cloudinary
         try {
@@ -173,6 +167,64 @@ if (isset($_POST['upload_image-btn'])) {
             exit();
         }
     }
+
+
+    // put stamp if stamp is selected
+    // if ($stampFilename !== 'no_stamp') {
+
+    //     // stamp image resource
+    //     $stamp = imagecreatefrompng($stampPath);
+    //     if (!$stamp) {
+    //         imagedestroy($im);
+    //         die("Failed to create stamp image from file");
+    //     }
+
+    //     // Set the margins for the stamp (top right corner)
+    //     $marge_right = 50;
+    //     $marge_top = 10;
+    //     $sx = imagesx($stamp);
+    //     $sy = imagesy($stamp);
+    //     $imWidth = imagesx($im);
+    //     $imHeight = imagesy($im);
+
+    //     // Determine the size ratio
+    //     $maxStampWidth = $imWidth * 0.2;
+    //     $ratio = $maxStampWidth / $sx;
+    //     $newStampWidth = intval($maxStampWidth);
+    //     $newStampHeight = intval($sy * $ratio);
+
+    //     // Resize the stamp
+    //     $resizedStamp = imagecreatetruecolor($newStampWidth, $newStampHeight);
+    //     imagealphablending($resizedStamp, false);
+    //     imagesavealpha($resizedStamp, true);
+    //     imagecopyresampled($resizedStamp, $stamp, 0, 0, 0, 0, $newStampWidth, $newStampHeight, $sx, $sy);
+
+    //     // Copy the stamp image onto our photo using the margin offsets and the photo
+    //     imagecopy($im, $resizedStamp, $imWidth - $newStampWidth - $marge_right, $marge_top, 0, 0, $newStampWidth, $newStampHeight);
+
+    //     // Start output buffering
+    //     ob_start();
+    //     imagepng($im); // Output the image data
+    //     $imageData = ob_get_contents(); // Get the image data from buffer
+    //     ob_end_clean(); // End and clean the buffer
+
+    //     // Clean up
+    //     imagedestroy($im);
+    //     imagedestroy($stamp);
+    //     imagedestroy($resizedStamp);
+
+    //     // Upload the stamped image data to Cloudinary
+    //     try {
+    //         $response = $cloudinary->uploadApi()->upload("data:image/png;base64," . base64_encode($imageData), [
+    //             'folder' => 'uploads/'
+    //         ]);
+    //         $uploadedFileUrl = $response['secure_url'];
+    //     } catch (Exception $e) {
+    //         error_log('Error uploading to Cloudinary: ' . $e->getMessage());
+    //         header("location: camera.php?error_message=Error uploading image");
+    //         exit();
+    //     }
+    // }
 
     // insert into posts table
     $stmt = $conn->prepare("INSERT INTO posts (user_id, likes, image, caption, hashtags, date, username, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
