@@ -58,27 +58,6 @@
         </div>
 
         <!-- Stamp Gallery -->
-        <!-- <div class="stamp-gallery">
-          <label>Select a Stamp:</label>
-          <div class="stamp-options mb-3">
-            <label>
-              <input type="radio" name="stamp" value="stamp1.png" checked>
-              <img src="assets/images/stamps/stamp1.png" alt="Stamp 1" class="stamp-preview">
-            </label>
-            <label>
-              <input type="radio" name="stamp" value="stamp2.png">
-              <img src="assets/images/stamps/stamp2.png" alt="Stamp 1" class="stamp-preview">
-            </label>
-            <label>
-              <input type="radio" name="stamp" value="stamp3.png">
-              <img src="assets/images/stamps/stamp3.png" alt="Stamp 1" class="stamp-preview">
-            </label>
-            <div>
-              <input type="radio" id="no_stamp" name="stamp" value="no_stamp" />
-              <label for="no_stamp" style="color:black;">No Stamp</label>
-            </div>
-          </div>
-        </div> -->
         <div class="stamp-gallery">
             <label>Select a Stamp:</label>
             <div class="stamp-options mb-3">
@@ -96,7 +75,7 @@
                 </label>
                 <!-- No stamp option -->
                 <div>
-                    <input type="checkbox" id="no_stamp" name="stamp[]" value="no_stamp" />
+                    <input type="checkbox" id="no_stamp" name="stamp[]" value="no_stamp" checked/>
                     <label for="no_stamp" style="color:black;">No Stamp</label>
                 </div>
             </div>
@@ -109,7 +88,7 @@
           <input type="text" name="hashtags" class="form-control" placeholder="type hashtags..." required />
         </div>
         <div class="form-group">
-          <button type="submit" name="upload_image-btn" class="upload-btn">
+          <button type="submit" name="upload_image-btn" class="upload-btn" id="submitButton">
             Submit
           </button>
         </div>
@@ -243,5 +222,31 @@
 </script>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.getElementById('imageInput');
+        const captureButton = document.getElementById('captureButton');
+        const submitButton = document.getElementById('submitButton');
+        const hiddenCapturedImage = document.getElementById('capturedImage');
+        
+        // Initially disable the submit button
+        submitButton.disabled = true;
+
+        // Enable submit button when an image is selected for upload
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                submitButton.disabled = false;
+            }
+        });
+
+        // Enable submit button when an image is captured
+        captureButton.addEventListener('click', function() {
+            if (hiddenCapturedImage.value) {
+                submitButton.disabled = false;
+            }
+        });
+    });
+</script>
+
 
 </html>

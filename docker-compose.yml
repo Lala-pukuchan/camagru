@@ -7,8 +7,6 @@ services:
       dockerfile: Dockerfile_nginx
     ports:
       - "1080:80"
-    # volumes:
-    #   - ./code:/code # commented out for cluster computer
     depends_on:
       - php
       - db
@@ -23,8 +21,6 @@ services:
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
-    # volumes:
-    #   - ./code:/code # commented out for cluster computer
   db:
     build:
       context: .
