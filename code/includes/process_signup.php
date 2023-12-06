@@ -25,8 +25,6 @@ if (isset($_POST['signup_btn'])) {
     }
 
     // check whether user already exists
-    //$stmt = $conn->prepare("SELECT id FROM users WHERE username = ? or email = ?");
-    //$stmt->bind_param("ss", $username, $email);
     $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -48,14 +46,6 @@ if (isset($_POST['signup_btn'])) {
             $stmt->execute();
             $stmt->bind_result($id, $username, $email, $image, $followers, $following, $post);
             $stmt->fetch();
-
-            $_SESSION['id'] = $id;
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
-            $_SESSION['image'] = $image;
-            $_SESSION['followers'] = $followers;
-            $_SESSION['following'] = $following;
-            $_SESSION['post'] = $post;
 
             // redirect to index.php
             header('location:../signup.php?success_message=please check your email to confirm your registration');
