@@ -74,14 +74,6 @@
                 </button>
               </div>
             </form>
-            <div class="or">
-              <hr />
-              <span>OR</span>
-              <hr />
-            </div>
-            <div class="goto">
-              <p>Already have an account? <a href="login.php">Login</a></p>
-            </div>
           </div>
         </div>
       </div>
