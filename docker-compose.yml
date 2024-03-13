@@ -10,6 +10,8 @@ services:
     depends_on:
       - php
       - db
+    volumes:
+      - ./code:/code # delete later
   php:
     build:
       context: .
@@ -21,6 +23,8 @@ services:
       CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
       CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
       CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+    volumes:
+      - ./code:/code # delete later
   db:
     build:
       context: .
