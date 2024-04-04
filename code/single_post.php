@@ -80,7 +80,6 @@ if (isset($_GET['post_id'])) {
 
             <?php if ($post['user_id'] == $_SESSION['id']) { ?>
               <button
-                onclick="document.getElementById('popup-comment<?php echo $comment['id']; ?>').style.display = 'block';"
                 class="profile-btn profile-settings-btn" id="options_btn" aria-label="profile settings">
                 <i class="fas fa-ellipsis-h options"></i>
               </button>
@@ -187,10 +186,12 @@ if (isset($_GET['post_id'])) {
   var optionsBtn = document.getElementById("options_btn");
   var closeWindow = document.getElementById("close_popup");
 
-  optionsBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    popupWindow.style.display = "block";
-  });
+  if (optionsBtn){
+    optionsBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      popupWindow.style.display = "block";
+    });
+  }
 
   closeWindow.addEventListener("click", (e) => {
     e.preventDefault();
