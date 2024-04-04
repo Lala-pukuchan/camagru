@@ -19,6 +19,7 @@ if (isset($_SESSION['id'])) {
   <title>Camagru | Login</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="icon" href="assets/images/logo.png" type="image/x-icon" />
 </head>
 
 <body>
@@ -62,12 +63,12 @@ if (isset($_SESSION['id'])) {
               <div class="form-group">
                 <div class="login-input">
                   <!--<input type="text" name="email" placeholder="Type your email..." required />-->
-                  <input type="text" name="username" placeholder="Type your username..." required />
+                  <input type="text" name="username" placeholder="Type your username..." required autocomplete="username"/>
                 </div>
               </div>
               <div class="form-group">
                 <div class="login-input">
-                  <input type="password" name="password" id="password" placeholder="Type your password..." required />
+                  <input type="password" name="password" id="password" placeholder="Type your password..." required autocomplete="current-password"/>
                 </div>
               </div>
               <div class="btn-group">
